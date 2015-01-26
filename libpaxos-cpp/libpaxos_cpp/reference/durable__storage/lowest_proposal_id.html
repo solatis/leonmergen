@@ -1,0 +1,55 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>durable::storage::lowest_proposal_id</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="up" href="../durable__storage.html" title="durable::storage">
+<link rel="prev" href="history_size.html" title="durable::storage::history_size">
+<link rel="next" href="remove.html" title="durable::storage::remove">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="history_size.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../durable__storage.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="remove.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="libpaxos_cpp.reference.durable__storage.lowest_proposal_id"></a><a class="link" href="lowest_proposal_id.html" title="durable::storage::lowest_proposal_id">durable::storage::lowest_proposal_id</a>
+</h4></div></div></div>
+<p>
+          <a class="indexterm" name="idp8126912"></a> 
+Looks up the lowest proposal id currently
+          stored.
+        </p>
+<pre class="programlisting"><span class="identifier">int64_t</span> <span class="identifier">lowest_proposal_id</span><span class="special">();</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.durable__storage.lowest_proposal_id.h0"></a>
+          <span><a name="libpaxos_cpp.reference.durable__storage.lowest_proposal_id.return_value"></a></span><a class="link" href="lowest_proposal_id.html#libpaxos_cpp.reference.durable__storage.lowest_proposal_id.return_value">Return
+          Value</a>
+        </h6>
+<p>
+          Returns the lowest proposal id in history, or 0 if no previous proposals
+          are stored
+        </p>
+<p>
+          This functionality is not really required by the paxos library, but is
+          used by the test cases.
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012 Leon Mergen<p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="history_size.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../durable__storage.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="remove.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

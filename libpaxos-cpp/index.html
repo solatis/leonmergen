@@ -1,0 +1,107 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>libpaxos-cpp 0.6.1</title>
+<link rel="stylesheet" href="boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="libpaxos-cpp 0.6.1">
+<link rel="next" href="libpaxos_cpp/getting_started.html" title="Getting started">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav"><a accesskey="n" href="libpaxos_cpp/getting_started.html"><img src="images/next.png" alt="Next"></a></div>
+<div class="article">
+<div class="titlepage">
+<div>
+<div><h2 class="title">
+<a name="libpaxos_cpp"></a>libpaxos-cpp 0.6.1</h2></div>
+<div><div class="authorgroup"><div class="author"><h3 class="author">
+<span class="firstname">Leon</span> <span class="surname">Mergen</span>
+</h3></div></div></div>
+<div><p class="copyright">Copyright &#169; 2012 Leon Mergen</p></div>
+<div><div class="legalnotice">
+<a name="libpaxos_cpp.legal"></a><p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></div>
+</div>
+<hr>
+</div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="section"><a href="libpaxos_cpp/getting_started.html">Getting started</a></span></dt>
+<dt><span class="section"><a href="libpaxos_cpp/tutorial.html">Tutorial</a></span></dt>
+<dt><span class="section"><a href="libpaxos_cpp/eventual_consistency.html">Eventual consistency</a></span></dt>
+<dt><span class="section"><a href="libpaxos_cpp/reference.html">Reference</a></span></dt>
+<dt><span class="section"><a href="libpaxos_cpp/revision_history.html">Revision history</a></span></dt>
+</dl>
+</div>
+<h3>
+<a name="libpaxos_cpp.h0"></a>
+    <span><a name="libpaxos_cpp.introduction"></a></span><a class="link" href="index.html#libpaxos_cpp.introduction">Introduction</a>
+  </h3>
+<p>
+    libpaxos-cpp is a C++ implementation of the Paxos distributed consensus protocol,
+    and is distributed under the 3-clause BSD license. It aims to provide the simplest
+    interface possible and hides much of the "gnarly stuff". As such, it
+    currently provides the following functionality:
+  </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+        Completely asynchronous, based on Boost.Asio;
+      </li>
+<li class="listitem">
+        Automated leader election, based on Chang and Roberts' algorithm;
+      </li>
+<li class="listitem">
+        Eventual consistency: a temporarely disconnected node is automatically recovered
+        using a catch-up algorithm;
+      </li>
+<li class="listitem">
+        Durable storage backend for the eventual consistency based on <a href="http://sqlite.org/" target="_top">SQLite</a>;
+      </li>
+<li class="listitem">
+        Uses modern C++11 standards
+      </li>
+<li class="listitem">
+        All guarantees that the Paxos protocol provides are provided by this library.
+      </li>
+</ul></div>
+<p>
+    Of course, there are a few limitations and assumptions:
+  </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+        The network is secure: everyone that is able to communicate with the libpaxos-cpp
+        processes are trusted;
+      </li>
+<li class="listitem">
+        There are no weird routing issues inside the quorum;
+      </li>
+<li class="listitem">
+        At the moment, it only implements the Basic Paxos protocol, Multi Paxos is
+        scheduled for a future release.
+      </li>
+</ul></div>
+<h3>
+<a name="libpaxos_cpp.h1"></a>
+    <span><a name="libpaxos_cpp.support"></a></span><a class="link" href="index.html#libpaxos_cpp.support">Support</a>
+  </h3>
+<p>
+    There is a Google Groups mailinglist for libpaxos-cpp to which you can subscribe
+    and ask your questions:
+  </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        <a href="http://groups.google.com/group/libpaxos-cpp" target="_top">http://groups.google.com/group/libpaxos-cpp</a>
+      </li></ul></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"><p><small>Last revised: November 05, 2012 at 10:01:49 GMT</small></p></td>
+<td align="right"><div class="copyright-footer"></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="libpaxos_cpp/getting_started.html"><img src="images/next.png" alt="Next"></a></div>
+</body>
+</html>

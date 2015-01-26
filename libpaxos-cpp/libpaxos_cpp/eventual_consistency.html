@@ -1,0 +1,212 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Eventual consistency</title>
+<link rel="stylesheet" href="../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="up" href="../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="prev" href="tutorial/durable_lock_service_server/a00001.html" title="Source listing for Durable server">
+<link rel="next" href="reference.html" title="Reference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="tutorial/durable_lock_service_server/a00001.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="reference.html"><img src="../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="libpaxos_cpp.eventual_consistency"></a><a class="link" href="eventual_consistency.html" title="Eventual consistency">Eventual consistency</a>
+</h2></div></div></div>
+<p>
+      The <a href="http://research.microsoft.com/apps/pubs/default.aspx?id=64631" target="_top">Paxos
+      protocol</a> defines the following safeness / liveness requirements:
+    </p>
+<div class="blockquote"><blockquote class="blockquote"><p>
+        <span class="emphasis"><em><span class="quote">&#8220;<span class="quote">If value C has been proposed, then eventually learner L
+        will learn some value</span>&#8221;</span></em></span>
+      </p></blockquote></div>
+<p>
+      It is important to realize that this also applies to learners that are not
+      available to the live quorum: if a learner is temporarily disconnected from
+      the quorum, it will eventually have to learn of all values proposed to the
+      quorum while it was disconnected. This implies some sort of eventual consistency
+      mechanism must be in place to ensure this property of the algorithm is not
+      violated.
+    </p>
+<h4>
+<a name="libpaxos_cpp.eventual_consistency.h0"></a>
+      <span><a name="libpaxos_cpp.eventual_consistency.implementation"></a></span><a class="link" href="eventual_consistency.html#libpaxos_cpp.eventual_consistency.implementation">Implementation</a>
+    </h4>
+<p>
+      libpaxos-cpp implements an eventual consistency algorithm that meets this requirement.
+      It maintains a history of all recently proposed values within the quorum. When
+      a node is reconnected to the quorum after being temporarily disconnected, the
+      library employs a catch-up mechanism to bring the node up-to-date with all
+      the proposed values while the node was disconnected.
+    </p>
+<h4>
+<a name="libpaxos_cpp.eventual_consistency.h1"></a>
+      <span><a name="libpaxos_cpp.eventual_consistency.durable_history"></a></span><a class="link" href="eventual_consistency.html#libpaxos_cpp.eventual_consistency.durable_history">Durable
+      history</a>
+    </h4>
+<p>
+      This implementation implies some sort of durably stored history must be in
+      place; otherwise, when all nodes crash over a certain period of time, there
+      is no way to recover all nodes to the correct state. In fact, it is impossible
+      to know which node has the most recent state.
+    </p>
+<p>
+      To tackle this problem, we implement a backend to store the (recent) history
+      on a durable storage device.
+    </p>
+<h4>
+<a name="libpaxos_cpp.eventual_consistency.h2"></a>
+      <span><a name="libpaxos_cpp.eventual_consistency.application_requirements"></a></span><a class="link" href="eventual_consistency.html#libpaxos_cpp.eventual_consistency.application_requirements">Application
+      requirements</a>
+    </h4>
+<p>
+      In normal operation, your application's model that processes the proposed values
+      is always in the most recent, consistent state. But the state between the Paxos
+      protocol and your application's state can get out of sync. Specifically, there
+      are two things that happen when a Paxos request is accepted at a server:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          your application processes the proposal and alters its state;
+        </li>
+<li class="listitem">
+          libpaxos-cpp stores the proposal in the durable log history and marks the
+          proposal as processed.
+        </li>
+</ol></div>
+<p>
+      If the application crashes in between these two actions, the Paxos state and
+      your application's state go out of sync. This is a rare situation to occur,
+      but it does need to be accounted for.
+    </p>
+<h6>
+<a name="libpaxos_cpp.eventual_consistency.h3"></a>
+      <span><a name="libpaxos_cpp.eventual_consistency.proposal_id"></a></span><a class="link" href="eventual_consistency.html#libpaxos_cpp.eventual_consistency.proposal_id">Proposal
+      id</a>
+    </h6>
+<p>
+      To solve this issue of inconsistency within your application, we provide you
+      with the "proposal_id" of a proposed value to your application's
+      processing function. This proposal_id can be considered as a version number,
+      and will always increment by 1. By associating your application's state with
+      the most recent proposal_id it has received, you can determine whether you
+      need to apply a certain operation or not.
+    </p>
+<p>
+      For example, your processing function might look something like this:
+    </p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span>
+<span class="identifier">callback</span> <span class="special">(</span>
+  <span class="identifier">int64_t</span> <span class="identifier">proposal_id</span><span class="special">,</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">value</span><span class="special">)</span>
+  <span class="special">{</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">model</span><span class="special">.</span><span class="identifier">proposal_version</span> <span class="special">()</span> <span class="special">&lt;</span> <span class="identifier">proposal_id</span><span class="special">)</span>
+    <span class="special">{</span>
+      <span class="identifier">model</span><span class="special">.</span><span class="identifier">process</span> <span class="special">(</span><span class="identifier">proposal_id</span><span class="special">,</span>
+                     <span class="identifier">value</span><span class="special">);</span>
+    <span class="special">}</span>
+
+    <span class="identifier">assert</span> <span class="special">(</span><span class="identifier">model</span><span class="special">.</span><span class="identifier">proposal_version</span> <span class="special">()</span> <span class="special">==</span> <span class="identifier">proposal_id</span><span class="special">);</span>
+  <span class="special">}</span>
+</pre>
+<p>
+      This will ensure that, in case a certain value is accidentally processed twice,
+      your model remains in a consistent state.
+    </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        You are free to ignore the proposal id. However, if you choose to do so,
+        it is important to realize that whenever your application experiences an
+        unclean shutdown, it is impossible for libpaxos-cpp to guarantee your application's
+        state and the state of the durable log history are in sync. In that case,
+        you must always completely re-sync from a node that cleanly shut down. Therefore,
+        it is recommended that you take the effort to implement this correctly.
+      </p></td></tr>
+</table></div>
+<p>
+      For a more elaborate example on how to implement this correctly, see the <a class="link" href="tutorial/durable_lock_service_server.html" title="Lock service.2 - Durable server">durable lock service
+      tutorial</a>.
+    </p>
+<h4>
+<a name="libpaxos_cpp.eventual_consistency.h4"></a>
+      <span><a name="libpaxos_cpp.eventual_consistency.adding_a_new_server"></a></span><a class="link" href="eventual_consistency.html#libpaxos_cpp.eventual_consistency.adding_a_new_server">Adding
+      a new server</a>
+    </h4>
+<p>
+      Adding a new server to the quorum without shutting down the entire quorum can
+      be tricky. Consider these facts:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          the quorum will only have a history of recently proposed values, and as
+          such is unable to sync an empty node's state from scratch;
+        </li>
+<li class="listitem">
+          even if it would keep a history of everything since the first launch of
+          the quorum, re-playing such a long log history can take ages.
+        </li>
+</ul></div>
+<p>
+      It would be easier if you could just copy an existing node's state and use
+      that as a base for the new node. And this is exactly the steps we recommend.
+    </p>
+<p>
+      On the existing server:
+    </p>
+<pre class="programlisting"><span class="identifier">user</span><span class="error">@</span><span class="identifier">server1</span> <span class="error">$</span> <span class="identifier">killall</span> <span class="special">-</span><span class="identifier">SIGTERM</span> <span class="identifier">application</span>
+<span class="identifier">user</span><span class="error">@</span><span class="identifier">server1</span> <span class="error">$</span> <span class="identifier">scp</span> <span class="special">./</span><span class="identifier">application</span><span class="special">.</span><span class="identifier">data</span> <span class="identifier">user</span><span class="error">@</span><span class="identifier">server2</span><span class="special">:/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">user</span><span class="special">/</span><span class="identifier">application</span><span class="special">.</span><span class="identifier">data</span>
+<span class="identifier">user</span><span class="error">@</span><span class="identifier">server1</span> <span class="error">$</span> <span class="special">./</span><span class="identifier">application</span>
+</pre>
+<p>
+      On the new server:
+    </p>
+<pre class="programlisting"><span class="identifier">user</span><span class="error">@</span><span class="identifier">server2</span> <span class="error">$</span> <span class="special">./</span><span class="identifier">application</span>
+</pre>
+<p>
+      Note that we completely discard the entire history of Paxos logs. This will
+      make the Paxos library send the new server <span class="bold"><strong>all</strong></span>
+      the recent history. If this is not what you want, you should copy the Paxos
+      state along with your application state.
+    </p>
+<p>
+      On the existing server:
+    </p>
+<pre class="programlisting"><span class="identifier">user</span><span class="error">@</span><span class="identifier">server1</span> <span class="error">$</span> <span class="identifier">killall</span> <span class="special">-</span><span class="identifier">SIGTERM</span> <span class="identifier">application</span>
+<span class="identifier">user</span><span class="error">@</span><span class="identifier">server1</span> <span class="error">$</span> <span class="identifier">scp</span> <span class="special">./</span><span class="identifier">application</span><span class="special">.</span><span class="identifier">data</span> <span class="identifier">user</span><span class="error">@</span><span class="identifier">server2</span><span class="special">:/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">user</span><span class="special">/</span><span class="identifier">application</span><span class="special">.</span><span class="identifier">data</span>
+<span class="identifier">user</span><span class="error">@</span><span class="identifier">server1</span> <span class="error">$</span> <span class="identifier">scp</span> <span class="special">./</span><span class="identifier">paxos</span><span class="special">.</span><span class="identifier">sqlite</span> <span class="identifier">user</span><span class="error">@</span><span class="identifier">server2</span><span class="special">:/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">user</span><span class="special">/</span><span class="identifier">paxos</span><span class="special">.</span><span class="identifier">sqlite</span>
+<span class="identifier">user</span><span class="error">@</span><span class="identifier">server1</span> <span class="error">$</span> <span class="special">./</span><span class="identifier">application</span>
+</pre>
+<p>
+      On the new server:
+    </p>
+<pre class="programlisting"><span class="identifier">user</span><span class="error">@</span><span class="identifier">server2</span> <span class="error">$</span> <span class="special">./</span><span class="identifier">application</span>
+</pre>
+<p>
+      This, of course, assumes you use the <a class="link" href="reference/durable__sqlite.html" title="durable::sqlite">sqlite
+      durable storage backend</a> with the filename "paxos.sqlite".
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012 Leon Mergen<p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="tutorial/durable_lock_service_server/a00001.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="reference.html"><img src="../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

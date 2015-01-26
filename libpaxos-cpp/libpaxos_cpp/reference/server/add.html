@@ -1,0 +1,105 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>server::add</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="up" href="../server.html" title="server">
+<link rel="prev" href="../server.html" title="server">
+<link rel="next" href="callback_type.html" title="server::callback_type">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="../server.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../server.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="callback_type.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="libpaxos_cpp.reference.server.add"></a><a class="link" href="add.html" title="server::add">server::add</a>
+</h4></div></div></div>
+<p>
+          Adds server to quorum registered the server is part of.
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <a class="link" href="add.html#libpaxos_cpp.reference.server.add.overload1" title="server::add (1 of 2 overloads)">add</a><span class="special">(</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="add.html#libpaxos_cpp.reference.server.add.overload1" title="server::add (1 of 2 overloads)">more...</a></em></span>
+</pre>
+<p>
+          Helper function of add (), which adds a whole list at once.
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <a class="link" href="add.html#libpaxos_cpp.reference.server.add.overload2" title="server::add (2 of 2 overloads)">add</a><span class="special">(</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">uint16_t</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">servers</span><span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="add.html#libpaxos_cpp.reference.server.add.overload2" title="server::add (2 of 2 overloads)">more...</a></em></span>
+</pre>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="libpaxos_cpp.reference.server.add.overload1"></a><a class="link" href="add.html#libpaxos_cpp.reference.server.add.overload1" title="server::add (1 of 2 overloads)">server::add
+          (1 of 2 overloads)</a>
+</h5></div></div></div>
+<p>
+            Adds server to quorum registered the server is part of.
+          </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">add</span><span class="special">(</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.server.add.overload1.h0"></a>
+            <span><a name="libpaxos_cpp.reference.server.add.overload1.parameters"></a></span><a class="link" href="add.html#libpaxos_cpp.reference.server.add.overload1.parameters">Parameters</a>
+          </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">server</span></dt>
+<dd><p>
+                  IPv4 address, IPv6 address or hostname of server to connect to
+                </p></dd>
+<dt><span class="term">port</span></dt>
+<dd><p>
+                  Port of server to connect to
+                </p></dd>
+</dl>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="libpaxos_cpp.reference.server.add.overload2"></a><a class="link" href="add.html#libpaxos_cpp.reference.server.add.overload2" title="server::add (2 of 2 overloads)">server::add
+          (2 of 2 overloads)</a>
+</h5></div></div></div>
+<p>
+            Helper function of add (), which adds a whole list at once.
+          </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">add</span><span class="special">(</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">uint16_t</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">servers</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.server.add.overload2.h0"></a>
+            <span><a name="libpaxos_cpp.reference.server.add.overload2.parameters"></a></span><a class="link" href="add.html#libpaxos_cpp.reference.server.add.overload2.parameters">Parameters</a>
+          </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">servers</span></dt>
+<dd><p>
+                  List of pairs of server/ports to connect to
+                </p></dd>
+</dl>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012 Leon Mergen<p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../server.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../server.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="callback_type.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

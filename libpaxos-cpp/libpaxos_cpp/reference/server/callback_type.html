@@ -1,0 +1,114 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>server::callback_type</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="up" href="../server.html" title="server">
+<link rel="prev" href="add.html" title="server::add">
+<link rel="next" href="server.html" title="server::server">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="add.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../server.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="server.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="libpaxos_cpp.reference.server.callback_type"></a><a class="link" href="callback_type.html" title="server::callback_type">server::callback_type</a>
+</h4></div></div></div>
+<p>
+          <a class="indexterm" name="idp8564080"></a> 
+Callback function that is passed to the <a class="link" href="../server.html" title="server"><code class="computeroutput"><span class="identifier">server</span></code></a> constructor.
+        </p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(</span><span class="identifier">int64_t</span> <span class="identifier">proposal_id</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">message</span><span class="special">)&gt;</span> <span class="identifier">callback_type</span><span class="special">;</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.server.callback_type.h0"></a>
+          <span><a name="libpaxos_cpp.reference.server.callback_type.parameters"></a></span><a class="link" href="callback_type.html#libpaxos_cpp.reference.server.callback_type.parameters">Parameters</a>
+        </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">proposal_id</span></dt>
+<dd><p>
+                Uniquely identifies the current proposal. This number is guaranteed
+                to increment between succeeding calls to this function and can be
+                regarded as a form of a version number. For more information on why
+                this parameter is passed and what you can do with it, see the <a class="link" href="../../eventual_consistency.html" title="Eventual consistency">documentation about eventual
+                consistency</a>.
+              </p></dd>
+<dt><span class="term">message</span></dt>
+<dd><p>
+                The message that is sent from the client. Note that, although we
+                use a std::string as the data type that holds the message, this data
+                is binary safe. A std::string is used more as a convenience since
+                most data serialization libraries allow one to directly generate
+                a std::string representation of the data.
+              </p></dd>
+</dl>
+</div>
+<h6>
+<a name="libpaxos_cpp.reference.server.callback_type.h1"></a>
+          <span><a name="libpaxos_cpp.reference.server.callback_type.return_value"></a></span><a class="link" href="callback_type.html#libpaxos_cpp.reference.server.callback_type.return_value">Return
+          Value</a>
+        </h6>
+<p>
+          The output that should be returned to the client.
+        </p>
+<p>
+          When you set up a Paxos quorum, you can send one command from a <a class="link" href="../client.html" title="client"><code class="computeroutput"><span class="identifier">client</span></code></a>, and have that same command
+          arrive at all the <a class="link" href="../server.html" title="server"><code class="computeroutput"><span class="identifier">server</span></code></a> instances within the quorum.
+          Your ultimate intention is the process that command at all the servers
+          and return a return value from all your servers to the client.
+        </p>
+<p>
+          This means that you need to be able to hook a processing function inside
+          the servers. We do this by providing a callback function to the servers,
+          with the following signature:
+        </p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">callback</span> <span class="special">(</span><span class="identifier">int64_t</span> <span class="identifier">proposal_id</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">message</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.server.callback_type.h2"></a>
+          <span><a name="libpaxos_cpp.reference.server.callback_type.requirements"></a></span><a class="link" href="callback_type.html#libpaxos_cpp.reference.server.callback_type.requirements">Requirements</a>
+        </h6>
+<p>
+          The callback function has several requirements:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+              It should return the same result for the same message processed at
+              all the different servers. In other words, if server1 replies to a
+              message "foo" with result "bar", server2 must reply
+              with the same result "bar". If not, a <a class="link" href="../exception__inconsistent_response.html" title="exception::inconsistent_response"><code class="computeroutput"><span class="identifier">exception</span><span class="special">::</span><span class="identifier">inconsistent_response</span></code></a> exception
+              is thrown at the client.
+            </li>
+<li class="listitem">
+              It should never throw an exception. If an exception is thrown, the
+              Paxos instance will abort the program.
+            </li>
+</ul></div>
+<h6>
+<a name="libpaxos_cpp.reference.server.callback_type.h3"></a>
+          <span><a name="libpaxos_cpp.reference.server.callback_type.requirements0"></a></span><a class="link" href="callback_type.html#libpaxos_cpp.reference.server.callback_type.requirements0">Requirements</a>
+        </h6>
+<p>
+          <span class="bold"><strong>Header: </strong></span><code class="literal">paxos++/server.hpp</code>
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012 Leon Mergen<p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="add.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../server.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="server.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

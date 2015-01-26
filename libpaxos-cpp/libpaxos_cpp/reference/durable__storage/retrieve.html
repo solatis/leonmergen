@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>durable::storage::retrieve</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="up" href="../durable__storage.html" title="durable::storage">
+<link rel="prev" href="remove.html" title="durable::storage::remove">
+<link rel="next" href="set_history_size.html" title="durable::storage::set_history_size">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="remove.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../durable__storage.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="set_history_size.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="libpaxos_cpp.reference.durable__storage.retrieve"></a><a class="link" href="retrieve.html" title="durable::storage::retrieve">durable::storage::retrieve</a>
+</h4></div></div></div>
+<p>
+          <a class="indexterm" name="idp8151104"></a> 
+Looks up all recently accepted values higher than
+          with <code class="computeroutput"><span class="identifier">proposal_id</span></code>.
+        </p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span> <span class="identifier">int64_t</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="identifier">retrieve</span><span class="special">(</span>
+    <span class="identifier">int64_t</span> <span class="identifier">proposal_id</span><span class="special">);</span>
+</pre>
+<p>
+          This function does not necessarily need to return all values. In fact,
+          it is preferred if a large catch-up is retrieved in small batches, so that
+          a catch-up can occur gradually instead of in a single paxos round.
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012 Leon Mergen<p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="remove.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../durable__storage.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="set_history_size.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

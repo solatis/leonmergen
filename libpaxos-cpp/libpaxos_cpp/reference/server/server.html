@@ -1,0 +1,238 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>server::server</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="up" href="../server.html" title="server">
+<link rel="prev" href="callback_type.html" title="server::callback_type">
+<link rel="next" href="stop.html" title="server::stop">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="callback_type.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../server.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="stop.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="libpaxos_cpp.reference.server.server"></a><a class="link" href="server.html" title="server::server">server::server</a>
+</h4></div></div></div>
+<p>
+          Opens socket to listen on port.
+        </p>
+<pre class="programlisting"><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload1" title="server::server (1 of 4 overloads)">server</a><span class="special">(</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">,</span>
+    <span class="identifier">callback_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload1" title="server::server (1 of 4 overloads)">more...</a></em></span>
+
+<a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload2" title="server::server (2 of 4 overloads)">server</a><span class="special">(</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">,</span>
+    <span class="identifier">callback_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">,</span>
+    <span class="identifier">paxos</span><span class="special">::</span><span class="identifier">configuration</span> <span class="special">&amp;</span> <span class="identifier">configuration</span><span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload2" title="server::server (2 of 4 overloads)">more...</a></em></span>
+
+<a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload3" title="server::server (3 of 4 overloads)">server</a><span class="special">(</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">,</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">,</span>
+    <span class="identifier">callback_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload3" title="server::server (3 of 4 overloads)">more...</a></em></span>
+
+<a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload4" title="server::server (4 of 4 overloads)">server</a><span class="special">(</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">,</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">,</span>
+    <span class="identifier">callback_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">,</span>
+    <span class="identifier">paxos</span><span class="special">::</span><span class="identifier">configuration</span> <span class="special">&amp;</span> <span class="identifier">configuration</span><span class="special">);</span>
+  <span class="emphasis"><em>&#187; <a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload4" title="server::server (4 of 4 overloads)">more...</a></em></span>
+</pre>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="libpaxos_cpp.reference.server.server.overload1"></a><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload1" title="server::server (1 of 4 overloads)">server::server
+          (1 of 4 overloads)</a>
+</h5></div></div></div>
+<p>
+            Opens socket to listen on port.
+          </p>
+<pre class="programlisting"><span class="identifier">server</span><span class="special">(</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">,</span>
+    <span class="identifier">callback_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.server.server.overload1.h0"></a>
+            <span><a name="libpaxos_cpp.reference.server.server.overload1.parameters"></a></span><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload1.parameters">Parameters</a>
+          </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">server</span></dt>
+<dd><p>
+                  IPv4 or IPv6 address we're listening at for new connections
+                </p></dd>
+<dt><span class="term">port</span></dt>
+<dd><p>
+                  Port we're listening at to new connections
+                </p></dd>
+<dt><span class="term">callback</span></dt>
+<dd><p>
+                  Callback used to process workload
+                </p></dd>
+</dl>
+</div>
+<p>
+            This constructor launches its own background thread with i/o context
+            and a default configuration.
+          </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="libpaxos_cpp.reference.server.server.overload2"></a><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload2" title="server::server (2 of 4 overloads)">server::server
+          (2 of 4 overloads)</a>
+</h5></div></div></div>
+<p>
+            Opens socket to listen on port.
+          </p>
+<pre class="programlisting"><span class="identifier">server</span><span class="special">(</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">,</span>
+    <span class="identifier">callback_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">,</span>
+    <span class="identifier">paxos</span><span class="special">::</span><span class="identifier">configuration</span> <span class="special">&amp;</span> <span class="identifier">configuration</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.server.server.overload2.h0"></a>
+            <span><a name="libpaxos_cpp.reference.server.server.overload2.parameters"></a></span><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload2.parameters">Parameters</a>
+          </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">server</span></dt>
+<dd><p>
+                  IPv4 or IPv6 address we're listening at for new connections
+                </p></dd>
+<dt><span class="term">port</span></dt>
+<dd><p>
+                  Port we're listening at to new connections
+                </p></dd>
+<dt><span class="term">callback</span></dt>
+<dd><p>
+                  Callback used to process workload
+                </p></dd>
+<dt><span class="term">configuration</span></dt>
+<dd><p>
+                  Runtime configuration
+                </p></dd>
+</dl>
+</div>
+<p>
+            This constructor launches its own background thread with i/o context.
+          </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="libpaxos_cpp.reference.server.server.overload3"></a><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload3" title="server::server (3 of 4 overloads)">server::server
+          (3 of 4 overloads)</a>
+</h5></div></div></div>
+<p>
+            Opens socket to listen on port.
+          </p>
+<pre class="programlisting"><span class="identifier">server</span><span class="special">(</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">,</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">,</span>
+    <span class="identifier">callback_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.server.server.overload3.h0"></a>
+            <span><a name="libpaxos_cpp.reference.server.server.overload3.parameters"></a></span><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload3.parameters">Parameters</a>
+          </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">io_service</span></dt>
+<dd><p>
+                  Boost.Asio io_service object, which represents the link to the
+                  OS'es i/o services
+                </p></dd>
+<dt><span class="term">server</span></dt>
+<dd><p>
+                  IPv4 or IPv6 address we're listening at for new connections
+                </p></dd>
+<dt><span class="term">port</span></dt>
+<dd><p>
+                  Port we're listening at to new connections
+                </p></dd>
+<dt><span class="term">callback</span></dt>
+<dd><p>
+                  Callback used to process workload
+                </p></dd>
+</dl>
+</div>
+<p>
+            This constructor uses a default configuration.
+          </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="libpaxos_cpp.reference.server.server.overload4"></a><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload4" title="server::server (4 of 4 overloads)">server::server
+          (4 of 4 overloads)</a>
+</h5></div></div></div>
+<p>
+            Opens socket to listen on port.
+          </p>
+<pre class="programlisting"><span class="identifier">server</span><span class="special">(</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="special">&amp;</span> <span class="identifier">io_service</span><span class="special">,</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">server</span><span class="special">,</span>
+    <span class="identifier">uint16_t</span> <span class="identifier">port</span><span class="special">,</span>
+    <span class="identifier">callback_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">callback</span><span class="special">,</span>
+    <span class="identifier">paxos</span><span class="special">::</span><span class="identifier">configuration</span> <span class="special">&amp;</span> <span class="identifier">configuration</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.server.server.overload4.h0"></a>
+            <span><a name="libpaxos_cpp.reference.server.server.overload4.parameters"></a></span><a class="link" href="server.html#libpaxos_cpp.reference.server.server.overload4.parameters">Parameters</a>
+          </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">io_service</span></dt>
+<dd><p>
+                  Boost.Asio io_service object, which represents the link to the
+                  OS'es i/o services
+                </p></dd>
+<dt><span class="term">server</span></dt>
+<dd><p>
+                  IPv4 or IPv6 address we're listening at for new connections
+                </p></dd>
+<dt><span class="term">port</span></dt>
+<dd><p>
+                  Port we're listening at to new connections
+                </p></dd>
+<dt><span class="term">callback</span></dt>
+<dd><p>
+                  Callback used to process workload
+                </p></dd>
+<dt><span class="term">configuration</span></dt>
+<dd><p>
+                  (Optional) Runtime configuration
+                </p></dd>
+</dl>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012 Leon Mergen<p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="callback_type.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../server.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="stop.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>client</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="up" href="../reference.html" title="Reference">
+<link rel="prev" href="../reference.html" title="Reference">
+<link rel="next" href="client/add.html" title="client::add">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="../reference.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="client/add.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="libpaxos_cpp.reference.client"></a><a class="link" href="client.html" title="client">client</a>
+</h3></div></div></div>
+<p>
+        Provides client-side interface to Paxos quorum.
+      </p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">client</span>
+</pre>
+<h5>
+<a name="libpaxos_cpp.reference.client.h0"></a>
+        <span><a name="libpaxos_cpp.reference.client.member_functions"></a></span><a class="link" href="client.html#libpaxos_cpp.reference.client.member_functions">Member
+        Functions</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="client/add.html" title="client::add">add</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Add server to quorum registered within the client.
+                </p>
+                <p>
+                  Add list of servers to quorum registered within the client.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="client/client.html" title="client::client">client</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Opens client.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="client/send.html" title="client::send">send</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Asynchronously send data to entire quorum and return result in
+                  a future.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="client/_client.html" title="client::~client">~client</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  Destructor.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<p>
+        The client class provides the core functionality for clients that want to
+        send messages to all <a class="link" href="server.html" title="server"><code class="computeroutput"><span class="identifier">server</span></code></a> instances in a paxos quorum.
+        It maintains an internal state of all remote servers inside the quorum, knows
+        which server is the leader, and automatically handles a leader failover in
+        case that occurs.
+      </p>
+<h5>
+<a name="libpaxos_cpp.reference.client.h1"></a>
+        <span><a name="libpaxos_cpp.reference.client.thread_safety"></a></span><a class="link" href="client.html#libpaxos_cpp.reference.client.thread_safety">Thread
+        Safety</a>
+      </h5>
+<p>
+        <span class="bold"><strong>Distinct</strong></span> <span class="bold"><strong>objects:</strong></span>
+        Safe
+      </p>
+<p>
+        <span class="bold"><strong>Shared</strong></span> <span class="bold"><strong>objects:</strong></span>
+        Unsafe
+      </p>
+<h5>
+<a name="libpaxos_cpp.reference.client.h2"></a>
+        <span><a name="libpaxos_cpp.reference.client.examples"></a></span><a class="link" href="client.html#libpaxos_cpp.reference.client.examples">Examples</a>
+      </h5>
+<p>
+        Let the client maintain its own thread of control, send a message to a quorum
+        of servers and wait for the result to arrive:
+      </p>
+<pre class="programlisting"><span class="identifier">paxos</span><span class="special">::</span><span class="identifier">client</span> <span class="identifier">client</span><span class="special">;</span>
+<span class="identifier">client</span><span class="special">.</span><span class="identifier">add</span> <span class="special">({{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1337</span><span class="special">},</span> <span class="special">{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1338</span><span class="special">},</span> <span class="special">{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1339</span><span class="special">}});</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span> <span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">future</span> <span class="special">=</span> <span class="identifier">client</span><span class="special">.</span><span class="identifier">send</span> <span class="special">(</span><span class="string">"foo"</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span> <span class="special">();</span>
+</pre>
+<p>
+        Setup a client that uses a different <a class="link" href="configuration.html" title="configuration"><code class="computeroutput"><span class="identifier">configuration</span></code></a> than the default:
+      </p>
+<pre class="programlisting"><span class="identifier">paxos</span><span class="special">::</span><span class="identifier">configuration</span> <span class="identifier">configuration</span><span class="special">;</span>
+<span class="identifier">configuration</span><span class="special">.</span><span class="identifier">set_timeout</span> <span class="special">(</span><span class="number">45000</span><span class="special">);</span>
+
+<span class="identifier">paxos</span><span class="special">::</span><span class="identifier">client</span> <span class="identifier">client</span> <span class="special">(</span><span class="identifier">configuration</span><span class="special">);</span>
+<span class="identifier">client</span><span class="special">.</span><span class="identifier">add</span> <span class="special">({{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1337</span><span class="special">},</span> <span class="special">{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1338</span><span class="special">},</span> <span class="special">{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1339</span><span class="special">}});</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span> <span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">future</span> <span class="special">=</span> <span class="identifier">client</span><span class="special">.</span><span class="identifier">send</span> <span class="special">(</span><span class="string">"foo"</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">future</span><span class="special">.</span><span class="identifier">get</span> <span class="special">();</span>
+</pre>
+<p>
+        Setup multiple clients that makes use of an external io_service object, and
+        as such can share the same thread:
+      </p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span> <span class="identifier">io_service</span><span class="special">;</span>
+
+<span class="comment">// This prevents the io_service from running out of work</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span><span class="special">::</span><span class="identifier">work</span> <span class="identifier">work</span> <span class="special">(</span><span class="identifier">io_service</span><span class="special">);</span>
+
+<span class="comment">// Launch new thread in the background which calls io_service.run ()</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span> <span class="identifier">io_thread</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span> <span class="special">(&amp;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span><span class="special">::</span><span class="identifier">run</span><span class="special">,</span>
+                                      <span class="special">&amp;</span><span class="identifier">io_service</span><span class="special">));</span>
+
+<span class="comment">// Note that we share the same io_service here, and thus both clients share the same</span>
+<span class="comment">// worker thread.</span>
+<span class="identifier">paxos</span><span class="special">::</span><span class="identifier">client</span> <span class="identifier">client1</span> <span class="special">(</span><span class="identifier">io_service</span><span class="special">);</span>
+<span class="identifier">paxos</span><span class="special">::</span><span class="identifier">client</span> <span class="identifier">client2</span> <span class="special">(</span><span class="identifier">io_service</span><span class="special">);</span>
+<span class="identifier">client1</span><span class="special">.</span><span class="identifier">add</span> <span class="special">({{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1337</span><span class="special">},</span> <span class="special">{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1338</span><span class="special">},</span> <span class="special">{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1339</span><span class="special">}});</span>
+<span class="identifier">client2</span><span class="special">.</span><span class="identifier">add</span> <span class="special">({{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1337</span><span class="special">},</span> <span class="special">{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1338</span><span class="special">},</span> <span class="special">{</span><span class="string">"127.0.0.1"</span><span class="special">,</span> <span class="number">1339</span><span class="special">}});</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span> <span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">future1</span> <span class="special">=</span> <span class="identifier">client1</span><span class="special">.</span><span class="identifier">send</span> <span class="special">(</span><span class="string">"foo"</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">future</span> <span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">future2</span> <span class="special">=</span> <span class="identifier">client2</span><span class="special">.</span><span class="identifier">send</span> <span class="special">(</span><span class="string">"foo"</span><span class="special">);</span>
+<span class="identifier">assert</span> <span class="special">(</span><span class="identifier">future1</span><span class="special">.</span><span class="identifier">get</span> <span class="special">()</span> <span class="special">==</span> <span class="identifier">future2</span><span class="special">.</span><span class="identifier">get</span> <span class="special">());</span>
+</pre>
+<h5>
+<a name="libpaxos_cpp.reference.client.h3"></a>
+        <span><a name="libpaxos_cpp.reference.client.requirements"></a></span><a class="link" href="client.html#libpaxos_cpp.reference.client.requirements">Requirements</a>
+      </h5>
+<p>
+        <span class="bold"><strong>Header: </strong></span><code class="literal">paxos++/client.hpp</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012 Leon Mergen<p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../reference.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="client/add.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta name="keywords" value="paxos,c++">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>durable::heap::set_history_size</title>
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../../index.html" title="libpaxos-cpp 0.6.1">
+<link rel="up" href="../durable__heap.html" title="durable::heap">
+<link rel="prev" href="retrieve.html" title="durable::heap::retrieve">
+<link rel="next" href="store.html" title="durable::heap::store">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="retrieve.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../durable__heap.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="store.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="libpaxos_cpp.reference.durable__heap.set_history_size"></a><a class="link" href="set_history_size.html" title="durable::heap::set_history_size">durable::heap::set_history_size</a>
+</h4></div></div></div>
+<p>
+          <span class="emphasis"><em>Inherited from durable::storage.</em></span>
+        </p>
+<p>
+          <a class="indexterm" name="idp7725696"></a> 
+Controls the amount of proposed values that
+          should be stored in the <a class="link" href="../durable__storage.html" title="durable::storage"><code class="computeroutput"><span class="identifier">durable</span><span class="special">::</span><span class="identifier">storage</span></code></a>.
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">set_history_size</span><span class="special">(</span>
+    <span class="identifier">int64_t</span> <span class="identifier">amount</span><span class="special">);</span>
+</pre>
+<h6>
+<a name="libpaxos_cpp.reference.durable__heap.set_history_size.h0"></a>
+          <span><a name="libpaxos_cpp.reference.durable__heap.set_history_size.parameters"></a></span><a class="link" href="set_history_size.html#libpaxos_cpp.reference.durable__heap.set_history_size.parameters">Parameters</a>
+        </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">amount</span></dt>
+<dd><p>
+                The minimal amount of values to store
+              </p></dd>
+</dl>
+</div>
+<p>
+          This controls the amount of proposed values that should at least be stored
+          in the <a class="link" href="../durable__storage.html" title="durable::storage"><code class="computeroutput"><span class="identifier">durable</span><span class="special">::</span><span class="identifier">storage</span></code></a>. Periodically, libpaxos-cpp
+          issues a cleanup command to the <a class="link" href="../durable__storage.html" title="durable::storage"><code class="computeroutput"><span class="identifier">durable</span><span class="special">::</span><span class="identifier">storage</span></code></a> component to remove old
+          proposed values that aren't used anymore. This variable controls the greediness
+          of this cleanup mechanism.
+        </p>
+<p>
+          Note that, if a follower in the paxos quorum is temporarily unreachable,
+          a cleanup will never be issued for the values proposed while the follower
+          is unreachable. The storage component never cleans logs if we have less
+          than this amount of logs in history.
+        </p>
+<p>
+          Defaults to 10000.
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2012 Leon Mergen<p>
+        Distributed under the 3-Clause BSD License. (See accompanying file COPYING
+        or copy at <a href="http://opensource.org/licenses/BSD-3-Clause" target="_top">http://opensource.org/licenses/BSD-3-Clause</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="retrieve.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../durable__heap.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="store.html"><img src="../../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
