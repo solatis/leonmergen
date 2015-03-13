@@ -8,7 +8,7 @@ layout: default
   <div class="row">
     <div class="eight columns">
       <p class="bread leftalign">
-	You are here: <a href="{{ "/index.html"  | prepend: site.baseurl }}"> Home</a>
+	You are here: <a href="{{ "/index.html"  | prepend: site.baseurl }}"> Home</a> / <a href="{{ page.url | prepend: site.baseurl }}">Haskell</a>
       </p>
     </div>
   </div>
@@ -16,4 +16,5 @@ layout: default
 <div class="hr">
 </div>
 
+{% assign category = 'haskell' %}
 {% include posts.html %}

@@ -2,7 +2,7 @@
 layout: post
 title:  "Welcome to Jekyll!"
 date:   2015-03-13 14:56:02
-categories: jekyll update
+categories: haskell crypto
 author: Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen

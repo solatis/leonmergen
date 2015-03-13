@@ -1,0 +1,38 @@
+<!-- CONTENT
+     ================================================== -->
+<div class="row">
+  <div class="twelve columns noleftmargin">
+    <!-- MAIN CONTENT -->
+    <div class="eight columns noleftmargin">
+
+      {% for post in site.posts %}
+      {% if category == null or post.categories contains category %}
+      <div class="circledate">
+	<div class="textcircle">
+          {{ post.date | date: "-%-d- <br/>%B<br/>%Y" }}
+	</div>
+      </div>
+      <h4><a class="saymore" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h4>
+      <div class="dots blogdots">
+      </div>
+      <p>
+        {{ post.content | strip_html | truncatewords:75 }} <a href="{{ post.url | prepend: site.baseurl }}" class="saymore">Read more</a>
+      </p>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+
+
+    <!-- SIDEBAR -->
+    <div class="four columns">
+      <h6 class="sidebartitle">POPULAR TAGS</h6>
+      {% for category in site.categories %}
+      <a href="/{{ category | first | slugize }}/" class="tags">{{ category | first }}</a>
+      {% endfor %}
+      <br class="clear"/>
+
+  </div>
+</div>
+<div class="hr">
+</div>

@@ -1,0 +1,59 @@
+---
+layout: default
+---
+
+<!-- SUBHEADER
+     ================================================== -->
+<div id="subheader">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="left">
+	CONTACT
+      </p>
+    </div>
+  </div>
+</div>
+<div class="hr">
+</div>
+
+<!-- CONTENT
+     ================================================== -->
+<div class="row">
+  <!-- GOOGLE MAP IFRAME -->
+  <div class="twelve columns">
+    <iframe class="gmap" src="https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d62115.616012002196!2d103.83124416741894!3d13.33621305036739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!1i0!3e6!4m0!4m5!1s0x3110182cca8f61ef%3A0xa448602fec4bcade!2sSala+Lodge+Rd%2C+Krong+Siem+Reap!3m2!1d13.3361322!2d103.8681524!5e0!3m2!1sen!2skh!4v1426254650995">
+    </iframe>
+  </div>
+</div>
+<div class="row">
+  <!-- CONTACT FORM -->
+  <div class="twelve columns">
+    <div class="wrapcontact">
+      <h5>SEND ME A MESSAGE</h5>
+      <div class="done">
+	<div class="alert-box success">
+	  Message has been sent! <a href="" class="close">x</a>
+	</div>
+      </div>
+      <form method="post" action="https://getsimpleform.com/messages?form_api_token=0b9ce40981cd36c4e7f5242d5b7ae029" id="contactform">
+        <input type='hidden' name='redirect_to' value='{{ "/contact_thanks.html"  | prepend: site.baseurl | prepend: site.url }}' />
+	<div class="form">
+	  <div class="six columns noleftmargin">
+	    <label>Name</label>
+	    <input type="text" name="name" class="smoothborder" placeholder="Your name *"/>
+	  </div>
+	  <div class="six columns">
+	    <label>E-mail address</label>
+	    <input type="text" name="email" class="smoothborder" placeholder="Your e-mail address *"/>
+	  </div>
+	  <label>Message</label>
+	  <textarea name="comment" class="smoothborder ctextarea" rows="14" placeholder="Message, feedback, comments *"></textarea>
+	  <input type="submit" id="submit" class="readmore" value="Submit">
+	</div>
+      </form>
+    </div>
+  </div>
+
+</div>
+<div class="hr">
+</div>
