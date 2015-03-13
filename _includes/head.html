@@ -1,12 +1,24 @@
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"/>
+  <!-- Set the viewport width to device width for mobile -->
 
+  <meta name="viewport" content="width=device-width"/>
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
-  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  <!-- Included CSS Files-->
+  <link rel="stylesheet" href="{{ "/stylesheets/syntax.css"     | prepend: site.baseurl }}"><!-- syntax highlighter -->
+  <link rel="stylesheet" href="{{ "/stylesheets/style.css"      | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ "/stylesheets/blog.css"       | prepend: site.baseurl }}"><!-- blog stylesheet -->
+  <link rel="stylesheet" href="{{ "/stylesheets/skins/teal.css" | prepend: site.baseurl }}"><!-- skin color -->
+  <link rel="stylesheet" href="{{ "/stylesheets/responsive.css" | prepend: site.baseurl }}">
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+
 </head>

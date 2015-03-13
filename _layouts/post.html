@@ -1,15 +1,48 @@
 ---
 layout: default
 ---
-<div class="post">
 
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
-  </header>
+<!-- SUBHEADER
+     ================================================== -->
+<div id="subheader">
+  <div class="row">
+    <div class="eight columns">
+      <p class="bread leftalign">
+	You are here: <a href="{{ "/index.html" | prepend: site.baseurl }}"> Home</a> / <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="hr">
+</div>
 
-  <article class="post-content">
-    {{ content }}
-  </article>
+<!-- CONTENT
+     ================================================== -->
+<div class="row">
+  <div class="twelve columns noleftmargin">
+    <!-- MAIN CONTENT -->
+    <div class="eight columns">
+      <div class="sectiontitle">
+	<h4>{{ page.title }}</h4>
+      </div>
 
+      {{ content }}
+
+      {% if page.author %}
+      <div class="panel">
+	<div class="avatar">
+	  <img src="http://www.gravatar.com/avatar/{{ page.author_gravatar }}?s=40" alt="">
+	</div>
+	<h5 class="left">AUTHOR: {{ page.author }} </h5>
+	<p class="clear authortext">
+	  Leon is a professional software engineer working freelance for various firms. He spends most of his time hacking away on opensource projects in Haskell, drinking ice-coffee and giving unasked advice to innocent strangers.<br/>
+	</p>
+      </div>
+      {% endif %}
+
+      {% include comments.html %}
+    </div>
+  </div>
+</div>
+<div class="hr">
 </div>
