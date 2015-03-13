@@ -1,57 +1,23 @@
-<html>
-  <head>
-    <title>Leon Mergen's home on the internet</title>
-  </head>
-  <body>
+---
+layout: default
+---
 
-    <div style="float:left; padding-right: 30px; padding-top: 25px; padding-left: 25px">
-      <!-- <a href='me.jpg'><img src='me.jpg' width='150' /></a> -->
-      &nbsp;
-    </div>
-    <div style="float: left; padding-right: 30px;">
+<div class="home">
 
-      <h1>Welcome to leonmergen.com</h1>
+  <h1 class="page-heading">Posts</h1>
 
-      <h2>About</h2>
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
-      <p>This is my personal home on the internet, mainly used to host opensource content. I am:</p>
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
 
-      <ul>
-        <li>an entrepreneur;</li>
-        <li>an alpinism and mountaineering addict;</li>
-        <li>a music lover;</li>
-        <li>all around geek.</li>
-      </ul>
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
-      <h2>Open source</h2>
-
-      <h3>C++</h3>
-
-      <ul>
-        <li><a href='libbackbone-cpp/'>libbackbone-cpp</a>, a C++ implementation of a minimalist MVC framework inspired by Backbone.JS</li>
-        <li><a href='libpaxos-cpp/'>libpaxos-cpp</a>, a C++ implementation of the Paxos distributed consensus protocol</li>
-      </ul>
-
-      <h3>Haskell</h3>
-
-      <ul>
-        <li><a href='http://hackage.haskell.org/package/network-attoparsec'>network-attoparsec</a>, utility functions for running a parser against a socket, without the need of a bigger framework such as Pipes or Conduit.</li>
-      </ul>
-
-      <h2>Contact</h2>
-
-      <p>I am available for freelance work. If you would like to get in touch with me, please drop a note to <a href='mailto:leon@solatis.com'>leon@solatis.com</a>.</p>
-
-      <p>Furthermore, my online persona can be found here:</p>
-      <ul>
-        <li><a href='http://www.linkedin.com/profile/view?id=9292937&amp;trk=tab_pro'>Linkedin</a></li>
-        <li><a href='https://www.facebook.com/lmergen'>Facebook</a></li>
-        <li><a href='http://last.fm/user/solatis'>Last.fm</a></li>
-      </ul>
-
-    </div>
-
-  </body>
-
-</html>
-
+</div>
