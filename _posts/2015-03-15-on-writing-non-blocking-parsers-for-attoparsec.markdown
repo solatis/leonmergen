@@ -58,7 +58,7 @@ This will ensure that the branch with the least required characters will be eval
 The answer is, why yes, of course we can:
 
 {% highlight haskell linenos %}
-safeString :: Parser ByteString
+safeString :: String -> Parser ByteString
 safeString = mapM (Atto.satisfy . (==)) . unpack
 {% endhighlight %}
 
