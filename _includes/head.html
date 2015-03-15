@@ -8,6 +8,7 @@
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
   <!-- Included CSS Files-->
+  <link rel="stylesheet" href="{{ "/stylesheets/syntax.css"     | prepend: site.baseurl }}"><!-- syntax highlighter -->
   <link rel="stylesheet" href="{{ "/stylesheets/style.css"      | prepend: site.baseurl }}">
   <link rel="stylesheet" href="{{ "/stylesheets/blog.css"       | prepend: site.baseurl }}"><!-- blog stylesheet -->
   <link rel="stylesheet" href="{{ "/stylesheets/skins/teal.css" | prepend: site.baseurl }}"><!-- skin color -->
