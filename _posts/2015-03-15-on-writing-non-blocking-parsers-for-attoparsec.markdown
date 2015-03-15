@@ -8,6 +8,8 @@ author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
 author_github: solatis
 ---
+![Choosing branches](/images/posts/blog1.jpg)
+
 The goal of Haskell's [Attoparsec](https://hackage.haskell.org/package/attoparsec) has always been clear: where Parsec provides you with a friendly parser combinator that produces nice error messages, Attoparsec does everything that is possible to give you the best speed possible. Error messages can be cryptic at best: `not enough bytes` is a common error when you would actually expect a real parse error.
 
 However, when you are able to live with that, Attoparsec does bring real advantages: personally I do not care about raw parser performance *that* much, but this goal for best performance has had another more interesting effect: it supports incremental parsing.

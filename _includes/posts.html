@@ -28,7 +28,7 @@
     <div class="four columns">
       <h6 class="sidebartitle">POPULAR TAGS</h6>
       {% for category in site.categories %}
-      <a href="/{{ category | first | slugize }}/" class="tags">{{ category | first }}</a>
+      <a href="/{{ category | first | slugize }}/" class="tags">{{ category | first | capitalize }}</a>
       {% endfor %}
       <br class="clear"/>
 
