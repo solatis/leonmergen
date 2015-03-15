@@ -66,4 +66,4 @@ As you can see here, the solution is threefold:
 2. Create a parser for each of these characters: this is done in the `Atto.satisfy` statement, creating for example three different parsers: `[Atto.satisfy (==) 'f', Atto.satisfy (==) 'o', Atto.satisfy (==) 'o']`
 3. Transform all those parsers `[Parser Char8]` into a single `Parser [Char8]` using `mapM` which can be applied on the input.
 
-Since StackOverflow suggests I am not the only person running into this problem, I highly encourage the attoparsec team to adopt this implementation of the string parser as an alternative, since it will safe many headaches and provides more predictable results.
+Since StackOverflow suggests I am not the only person running into this problem, I highly encourage the attoparsec team to adopt this implementation of the string parser as an alternative, since it will save many headaches and provides more predictable results.
