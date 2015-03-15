@@ -28,6 +28,18 @@ layout: default
 
       {{ content }}
 
+      {% if page.author %}
+      <div class="panel">
+	<div class="avatar">
+	  <img src="http://www.gravatar.com/avatar/{{ page.author_gravatar }}?s=40" alt="">
+	</div>
+	<h5 class="left">AUTHOR: {{ page.author }} </h5>
+	<p class="clear authortext">
+	  Leon is a professional software engineer working freelance for various firms. He spends most of his time hacking away on opensource projects in Haskell, drinking ice-coffee and giving unasked advice to innocent strangers.<br/>
+	</p>
+      </div>
+      {% endif %}
+
       {% include comments.html %}
     </div>
   </div>

@@ -43,7 +43,7 @@ Wait a minute! Doesn't that mean... *yes*. If it is not obvious to you yet, let'
 takeWith 6 (== "wombat") <|> takeWith 3 (== "foo")
 {% endhighlight %}
 
-By now the problem should be obvious to you: the parser is blocking because the first option, `wombat` requests 6 bytes of data from takeWith, even though it *should* know for sure that this branch can never match! This is probably done for performance reasons, and is not a problem in a non-incremental world, but since I live in an iterative world, this *is* a problem for me. So how can we fix this?
+By now the problem should be obvious to you: the parser is blocking because the first option, `wombat` requests 6 bytes of data from `takeWith`, even though it *should* know for sure that this branch can never match! This is probably done for performance reasons, and is not a problem in a non-incremental world, but since I live in an iterative world, this *is* a problem for me. So how can we fix this?
 
 The obvious but error-prone solution is to reorder the parsers:
 
