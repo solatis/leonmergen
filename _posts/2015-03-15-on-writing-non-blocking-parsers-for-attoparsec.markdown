@@ -26,7 +26,7 @@ After developing the library, a situation I suddenly felt myself in was that my 
 {% highlight haskell linenos %}
 main :: IO ()
 main = do
-  let parser = Atto8.string "wombat" <|> Atto8.string "wombat"
+  let parser = Atto8.string "wombat" <|> Atto8.string "foo"
       res    = Atto.parse parser "foo"
 
   putStrLn (show res)
