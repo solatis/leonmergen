@@ -35,7 +35,7 @@ There is one variable lacking in these strategies, though: investors. They are t
 
 ##### The consumer wins?
 
-That depends on your definition of consumer and winning. For the right kind of audience that wants to quickly develop a MVP and wants that to be as painless as possible, then I agree that this is a very good development. However, if you are a established and looking to do serious business with another business, you want to be sure you're not buying into anything with only a short-term vision and sustainability. You want to know the long-term vision of profitability. And if that vision is "we will be selling support", and they have investors behind them, you know you are being lied to: the investors are funding the development of the technology, and are not committed towards the software; they are committed to being acquired by a big player.
+That depends on your definition of consumer and winning. For the right kind of audience that wants to quickly develop a MVP and wants that to be as painless as possible, then I agree that this is a very good development. However, if none of your customers would pay for your services or product, you agree that you wouldn't be able to run a business. If you use the product/service of another business without making sure they can make a living out of it, you are killing your business partners and therefore shooting yourself in the foot. In other words, you want to be sure you're not buying into anything with only a short-term vision and sustainability. You want to know the long-term vision of profitability. And if that vision is "we will be selling support", and they have investors behind them, you know you are being lied to: the investors are funding the development of the technology, and are not committed towards the software; they are committed to being acquired by a big player. And acquiring you as a customer is a means towards that goal, rather than the goal itself.
 
 One could argue that any business could be acquired, even when you pay for the software. However, when the product is profitable, there is far less need to change it. When the product is given away for free, other means of monetization need to be implemented after acquisition.
 
@@ -50,8 +50,6 @@ The business I co-founded was a SaaS in a competitive market. As one of the few 
 - Customer: "And they have the same features and are cheaper!"
 - Us: "That's because the investors are paying half your bill; they are actually losing money."
 - Customer: "We'll call you."
-
-If none of your customers would pay for your services or product, you agree that you wouldn't be able to run a business. If you use the product/service of another business without making sure they can make a living out of it, you are killing your business partners and therefore shooting yourself in the foot.
 
 In the database market, it's exactly the same at the moment: customers are being spoiled and getting used to the fact that a database server should be free software. Now, don't get me wrong: as long as there is a healthy ecosystem of a true free software community surrounding a project (like PostgreSQL), and there are true support-oriented businesses surrounding that ecosystem, then I would fully support the decision to go ahead with such a solution. However, if there is only one business funding the development of the software, then it is in fact no better than being a freemium product: the premium price being paid as soon as *you* are committed to the software with your entire codebase and the acquisition taking place.
 
