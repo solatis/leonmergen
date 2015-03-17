@@ -35,9 +35,11 @@ There is one variable lacking in these strategies, though: investors. They are t
 
 ##### The consumer wins?
 
-That depends on your definition of consumer and winning. For the right kind of audience that wants to quickly develop a MVP and wants that to be as painless as possible, then I agree that this is a very good development. However, if you are a serious business looking to do serious business with another business, you want to be sure you're not buying into anything with only a short-term vision and sustainability. You want to know the long-term vision of profitability. And if that vision is "we will be selling support", and they have investors behind them, you know you are being lied to: the investors are funding the development of the technology, and are not committed towards the software; they are committed to being acquired by a big player. 
+That depends on your definition of consumer and winning. For the right kind of audience that wants to quickly develop a MVP and wants that to be as painless as possible, then I agree that this is a very good development. However, if you are a established and looking to do serious business with another business, you want to be sure you're not buying into anything with only a short-term vision and sustainability. You want to know the long-term vision of profitability. And if that vision is "we will be selling support", and they have investors behind them, you know you are being lied to: the investors are funding the development of the technology, and are not committed towards the software; they are committed to being acquired by a big player.
 
-##### The solution
+One could argue that any business could be acquired, even when you pay for the software. However, when the product is profitable, there is far less need to change it. When the product is given away for free, other means of monetization need to be implemented after acquisition.
+
+##### Stories from the field
 
 The business I co-founded was a SaaS in a competitive market. As one of the few exceptions to the rule, we seemed to be one of the only businesses that were bootstrapped from scratch, instead of being investor funded. This put some serious constraints on the way we priced our software: we had to be *profitable*. Sales conversations often went like this:
 
@@ -50,5 +52,7 @@ The business I co-founded was a SaaS in a competitive market. As one of the few 
 - Customer: "We'll call you."
 
 In the database market, it's exactly the same at the moment: customers are being spoiled and getting used to the fact that a database server should be free software. Now, don't get me wrong: as long as there is a healthy ecosystem of a true free software community surrounding a project (like PostgreSQL), and there are true support-oriented businesses surrounding that ecosystem, then I would fully support the decision to go ahead with such a solution. However, if there is only one business funding the development of the software, then it is in fact no better than being a freemium product: the premium price being paid as soon as *you* are committed to the software with your entire codebase and the acquisition taking place.
+
+##### Selling software is ok
 
 The solution is simple: it is not bad to pay for software, really. If you want to make sure your software vendor remains in business, pay a fair price for the software. Realize that the only problem a business is solving when giving away its technology as free software, is the problem of market acquisition; in return it makes the problem of monetization almost unsolvable. But if a business is truly confident in that it has good technology, and it solves real problems, people will pay for it anyway; it is only the businesses that are unsure about their competitive advantage of their technology that have to worry about customer acquisition, so they have nothing to lose with providing their software for free.
