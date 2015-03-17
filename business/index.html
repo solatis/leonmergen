@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+<!-- SUBHEADER
+     ================================================== -->
+<div id="subheader">
+  <div class="row">
+    <div class="eight columns">
+      <p class="bread leftalign">
+	You are here: <a href="{{ "/index.html"  | prepend: site.baseurl }}"> Home</a> / <a href="{{ page.url | prepend: site.baseurl }}">Haskell</a>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="hr">
+</div>
+
+{% assign category = 'business' %}
+{% include posts.html %}

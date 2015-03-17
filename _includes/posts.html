@@ -7,6 +7,7 @@
 
       {% for post in site.posts %}
       {% if category == null or post.categories contains category %}
+      {% if post.draft != true %}
       <div class="circledate">
 	<div class="textcircle">
           {{ post.date | date: "-%-d- <br/>%B<br/>%Y" }}
@@ -18,6 +19,7 @@
       <p>
         {{ post.content | strip_html | truncatewords:75 }} <a href="{{ post.url | prepend: site.baseurl }}" class="saymore">Read more</a>
       </p>
+      {% endif %}
       {% endif %}
       {% endfor %}
 
