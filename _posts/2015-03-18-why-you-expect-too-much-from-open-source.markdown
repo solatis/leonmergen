@@ -52,7 +52,7 @@ The business I co-founded was a SaaS in a competitive market. As one of the few 
 - Us: "That's because the investors are paying half your bill; they are actually losing money."
 - Customer: "We'll call you."
 
-In the database market, it's exactly the same at the moment: customers are being spoiled and getting used to the fact that a database server should be free software. Now, don't get me wrong: as long as there is a healthy ecosystem of a true free software community surrounding a project (like PostgreSQL), and there are true support-oriented businesses surrounding that ecosystem, then I would fully support the decision to go ahead with such a solution. However, if there is only one business funding the development of the software, then it is in fact no better than being a freemium product: the premium price being paid as soon as *you* are committed to the software with your entire codebase and the acquisition taking place. 
+In the database market, it's exactly the same at the moment: customers are being spoiled and getting used to the fact that a database server should be free software. Now, don't get me wrong: as long as there is a healthy ecosystem of a true free software community surrounding a project (like [PostgreSQL](http://www.postgresql.org/)), and there are true support-oriented businesses surrounding that ecosystem, then I would fully support the decision to go ahead with such a solution. However, if there is only one business funding the development of the software, then it is in fact no better than being a freemium product: the premium price being paid as soon as *you* are committed to the software with your entire codebase and the acquisition taking place. 
 
 ##### Paying for software is ok
 
