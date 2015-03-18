@@ -19,6 +19,8 @@
       <p>
         {{ post.content | strip_html | truncatewords:75 }} <a href="{{ post.url | prepend: site.baseurl }}" class="saymore">Read more</a>
       </p>
+      <div class="hr">
+      </div>
       {% endif %}
       {% endif %}
       {% endfor %}
