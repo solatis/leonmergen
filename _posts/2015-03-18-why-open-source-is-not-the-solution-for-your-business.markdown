@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "The case against open source"
+title:      "Why open source is not the solution for your business"
 date:       2015-03-18 15:20:02
 categories: business
 author:     Leon Mergen
