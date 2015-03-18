@@ -1,9 +1,9 @@
 ---
-layout: post
-title:  "The case against opensource"
-draft:  true
+layout:     post
+title:      "The case against opensource"
+date:       2015-03-18 15:20:02
 categories: business
-author: Leon Mergen
+author:     Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
 author_github: solatis
