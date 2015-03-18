@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "On buying opensource from a serious business"
+title:  "The case against opensource"
 draft:  true
 categories: business
 author: Leon Mergen
