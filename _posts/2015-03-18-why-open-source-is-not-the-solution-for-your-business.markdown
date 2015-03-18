@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Why open source is not the solution for your business"
+title:      "Why you expect too much from open source"
 date:       2015-03-18 15:20:02
 categories: business
 author:     Leon Mergen
