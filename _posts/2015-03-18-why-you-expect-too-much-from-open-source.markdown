@@ -40,6 +40,12 @@ That depends on your definition of consumer and winning. For the right kind of a
 
 One could argue that any business could be acquired, even when you pay for the software. However, when the product is profitable, there is far less need to change it. When the product is given away for free, other means of monetization need to be implemented after the acquisition.
 
+##### There is no pure market
+
+Underneath the previous argument lies the assumption that there is a pure market in which there are only market-based production of goods. The market, however, is not pure: if the product gains traction, non-market goods may also be produced (i.e. an ecosystem of volunteers). The theory is that free software puts the power to the people: if the original producer misbehaves, is acquired or goes bankrupt a rich ecosystem of volunteers will fork the project and continue the effort.
+
+The first thing you should do when deciding to commit yourself to a specific software vendor is try to figure out whether they will still be in business a several years down the road. For young businesses, this can be difficult: if a software vendor is releasing its product as open source and is losing money, and investors are paying your bill, this becomes a big risk to their sustainability. This shows that the argument that releasing a software product as free software makes it more resilient in the long term is flawed since it ignores the fact that a business that doesn't earn any money with its product is far more likely to go out of business in the first place. 
+
 ##### Stories from the field
 
 The business I co-founded was a SaaS in a competitive market. As one of the few exceptions to the rule, we seemed to be one of the only businesses that were bootstrapped from scratch, instead of being investor funded. This put some serious constraints on the way we priced our software: we had to be *profitable*. Sales conversations often went like this:
