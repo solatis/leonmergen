@@ -8,8 +8,7 @@ author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
 author_github: solatis
 ---
-
-![Building bridges](/images/posts/blog2.jpg)
+<img src='/images/posts/blog2.jpg' class='blogimage' title='Building bridges' />
 
 There has been a trend in the last years where software companies completely embrace the open source model and release their product as open source for the community. This has been largely fueled by the free software movement: they have shown that groups of individuals, making software for the sake of sharing it with others, are just as capable as releasing quality software as traditional software businesses are. In a struggle to keep themselves relevant, some businesses have been founded on the idea of embracing free (as in speech) software and build their business around this product. In this post I will make an argument to show that this is a flawed way of conducting business, and why you should be wary of buying into these companies' products. 
 
@@ -28,9 +27,9 @@ The rationale from a business perspective for releasing your product as free sof
 
 This was the short term vision. For the long-term profitability of these businesses, I can see three strategies:
 
-1. become a service company and aim for big support contracts from big customers;
-2. become a platform to sell plug-ins;
-3. exit by being acquired by a bigger firm that has other means of monetization (for example, as part of a larger platform of services).
+* become a service company and aim for big support contracts from big customers;
+* become a platform to sell plug-ins;
+* exit by being acquired by a bigger firm that has other means of monetization (for example, as part of a larger platform of services).
 
 The first two options are very viable ways to build a business. [MySQL](http://www.mysql.com/) used to be a successful service company, and [SQLite](https://sqlite.org/) seems to be doing pretty well selling compression and encryption plugins. However, there is one crucial variable lacking in these strategies: investors. They are the ones paying the bill for gaining the market share in the starting phase and the only reason they invested is for your business to become a cash cow. The first two options are unlikely to meet that demand: selling support does not scale, and selling plug-ins becomes very hard if your product is a big success and there is an actual ecosystem of volunteers surrounding it. This means that both these options are not attractive when you take on investors, and aiming for a big exit is the only viable business model for a business that releases its core product as free software.
 
@@ -44,19 +43,32 @@ One could argue that any business could be acquired, even when you pay for the s
 
 Underneath the previous argument lies the assumption that there is a pure market in which there are only market-based production of goods. The market, however, is not pure: if the product gains traction, non-market goods may also be produced (i.e. an ecosystem of volunteers). The theory is that free software puts the power to the people: if the original producer misbehaves, is acquired or goes bankrupt a rich ecosystem of volunteers will fork the project and continue the effort.
 
-The first thing you should do when deciding to commit yourself to a specific software vendor is try to figure out whether they will still be in business a several years down the road. For young businesses, this can be difficult: if a software vendor is releasing its product as open source and is losing money, and investors are paying your bill, this becomes a big risk to their sustainability. This shows that the argument that releasing a software product as free software makes it more resilient in the long term is flawed since it ignores the fact that a business that doesn't earn any money with its product is far more likely to go out of business in the first place. 
+The first thing you should do when deciding to commit yourself to a specific software vendor is try to figure out whether they will still be in business a several years down the road. For young businesses, this can be difficult: if a software vendor is releasing its product as open source, is losing money and investors are paying your bill, this becomes a big risk to their sustainability. This shows that the argument that releasing a software product as free software makes it more resilient in the long term is flawed since it ignores the fact that a business that doesn't earn any money with its product is far more likely to go out of business in the first place. 
 
 ##### Stories from the field
 
 The business I co-founded was a SaaS in a competitive market. As one of the few exceptions to the rule, we seemed to be one of the only businesses that were bootstrapped from scratch, instead of being investor funded. This put some serious constraints on the way we priced our software: we had to be *profitable*. Sales conversations often went like this:
 
-- Customer: "We are not happy with our current solution."
-- Me: "We are better!"
-- Customer: "We worry about your business' sustainability, the competition is bigger and has more money."
-- Us: "That's because they have investors."
-- Customer: "And they have the same features and are cheaper!"
-- Us: "That's because the investors are paying half your bill; they are actually losing money."
-- Customer: "We'll call you."
+Customer:
+: We are not happy with our current solution.
+
+Us:
+: We are better!
+
+Customer:
+: We worry about your business' sustainability, the competition is bigger and has more money.
+
+Us:
+: That's because they have investors.
+
+Customer:
+: And they have the same features and are cheaper!
+
+Us:
+: That's because the investors are paying half your bill; they are actually losing money.
+
+Customer:
+: We'll call you.
 
 In the database market, it's exactly the same at the moment: customers are being spoiled and getting used to the fact that a database server should be free software. Now, don't get me wrong: as long as there is a healthy ecosystem of a true free software community surrounding a project (like [PostgreSQL](http://www.postgresql.org/)), and there are true support-oriented businesses surrounding that ecosystem, then I would fully support the decision to go ahead with such a solution. However, if there is only one business funding the development of the software, then it is in fact no better than being a freemium product: the premium price being paid as soon as *you* are committed to the software with your entire codebase and the acquisition taking place. 
 

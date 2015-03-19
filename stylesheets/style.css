@@ -646,6 +646,11 @@ table thead tr th:last-child,table tfoot tr td:last-child { border-right: none }
 table tbody tr.even,table tbody tr.alt { background: #f9f9f9 }
 table tbody tr:nth-child(even) { background: #f9f9f9 }
 table tbody tr td { color: #333; padding: 9px 10px; vertical-align: top; border: none; }
+
+/* Definition lists ------------------ */
+dl dt { font-weight: bold; }
+dl dd { margin-bottom: 10px; margin-left: 10px; }
+
 /* Microformats ---------------------- */
 ul.vcard { display: inline-block; margin: 0 0 12px 0; border: 1px solid #ddd; padding: 10px; }
 ul.vcard li { margin: 0; display: block; }
@@ -837,7 +842,7 @@ a:focus { outline: none }
 .minipause { height: 13px }
 .smoothborder { border: 1px solid #CCC !important }
 .blogstyle { padding: 22px 50px 23px 50px !important }
-.blog img { width: 99.9% }
+.blogimage { width: 99.9% }
 .blogdots { margin-left: 110px; margin-top: -5px; margin-bottom: 10px; }
 .authoricons { width: 30px; height: 30px; margin-right: 10px; }
 .teamwrap { width: 100%; height: 200px; margin: 10px; float: left; border: 10px solid #fff; overflow: hidden; position: relative; text-align: center; -webkit-box-shadow: 0px 0px 0px 1px #E6E6E6; -moz-box-shadow: 0px 0px 0px 1px #E6E6E6; box-shadow: 0px 0px 0px 1px #E6E6E6; cursor: default; background: #fff; }
