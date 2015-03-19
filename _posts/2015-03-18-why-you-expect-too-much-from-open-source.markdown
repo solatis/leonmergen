@@ -39,13 +39,19 @@ That depends on your definition of consumer and winning. For the right kind of a
 
 One could argue that any business could be acquired, even when you pay for the software. However, when the product is profitable, there is far less need to change it. When the product is given away for free, other means of monetization need to be implemented after the acquisition.
 
-##### There is no pure market
+##### The market is pure
 
-Underneath the previous argument lies the assumption that there is a pure market in which there are only market-based production of goods. The market, however, is not pure: if the product gains traction, non-market goods may also be produced (i.e. an ecosystem of volunteers). The theory is that free software puts the power to the people: if the original producer misbehaves, is acquired or goes bankrupt a rich ecosystem of volunteers will fork the project and continue the effort.
+Underneath the previous argument lies the assumption that there is a pure market in which there are only market-based production of goods. Some will argue that the market, however, is not pure: if the product gains traction, non-market goods may also be produced (i.e. an ecosystem of volunteers). The theory is that free software puts the power to the people: if the product owner misbehaves, is acquired or goes bankrupt a rich ecosystem of volunteers will fork the project and continue the effort.
 
 The first thing you should do when deciding to commit yourself to a specific software vendor is try to figure out whether they will still be in business a several years down the road. For young businesses, this can be difficult: if a software vendor is releasing its product as open source, is losing money and investors are paying your bill, this becomes a big risk to their sustainability. The only situation in where this risk is low, is when the actual ecosystem grows very large; as such, the business behind it is more likely to be succesful too.
 
-This shows that the argument that releasing a software product as free software makes it more resilient in the long term is flawed since it ignores the fact that a business that doesn't earn any money with its product is far more likely to go out of business in the first place.
+This shows that the argument that releasing a software product as free software makes it more resilient in the long term is flawed since it ignores the fact that a business that doesn't earn any money with its product is far more likely to go out of business in the first place. Thus, the businesses that fall within this argument operate in a pure market.
+
+##### The pencil doesn't draw the painting
+
+When your product is closed source and you are a small business, your customers want some assurance for when disaster strikes and you go out of business. A common solution to mitigate this risk and gives them some assurance is to put your code in arbitrage: when you go out of business, they get access to your source code.
+
+Access to the code of a product is interesting from a hacker's perspective, but makes little business sense: it's like getting access to Leonardo's pencil and expecting to be able to draw the Mona Lisa. You have no intrinsic knowledge about the design of the product and your only chance of being able to do anything with the software is to hire the engineering team of the failed business. Providing your source code as open source is like giving away early access to this scenario and is worth nothing to the consumer from a business perspective; it is just an easy way for the software vendor to pretend the customer has some form of control.
 
 ##### Stories from the field
 
