@@ -121,7 +121,7 @@ The fact that this is a home-grown implementation of AES, instead of a wrapper a
 
 And just to raise the level of tinfoil-hatness we have going on here, I am going to leave this here: [RSA]() is a popular (the only?) Haskell implementation of the RSA assymetric encryption algorithm. It is a widely used public/private keypair encryption algorithm.
 
-Other than the fact that it relies on the RdRand instruction through the `entropy` package, the developer of the RSA package is [Galois, Inc](http://galois.com/) is a [known military contractor](http://www.defense.gov/contracts/contract.aspx?contractid=5076); they help the government on cyber warfare projects. So the developer of the implementation of the most widely used assymetric encryption algorithm, which relies on a library that uses RdRand solely as the source of random data, helps the US defense in cyber warfare. Draw your own conclusions.
+Other than the fact that it relies on the RdRand instruction through the `entropy` package, the developer of the RSA package is [Galois, Inc](http://galois.com/), a [known military contractor](http://www.defense.gov/contracts/contract.aspx?contractid=5076); they help the government on cyber warfare projects. So the developer of the implementation of the most widely used assymetric encryption algorithm, which relies on a library that uses RdRand solely as the source of random data, helps the US defense in cyber warfare. Draw your own conclusions.
 
 ###### OpenSSL
 
