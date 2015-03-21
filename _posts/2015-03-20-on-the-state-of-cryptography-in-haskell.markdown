@@ -1,8 +1,7 @@
 ---
 layout:     post
 title:      "On the state of cryptography in Haskell"
-date:       2015-03-20 12:22:02
-draft:      true
+date:       2015-03-21 12:22:02
 categories: haskell crypto
 author:     Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
