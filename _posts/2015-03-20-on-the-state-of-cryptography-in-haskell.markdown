@@ -102,7 +102,7 @@ So are there no ways of generating a cryptographically secure random number in H
 
 ##### Algorithms
 
-So the old saying goes: whenever you want to write cryptographic code yourself, don't. In Haskell, however, we have [quite a collection of home-grown cryptography libraries](https://hackage.haskell.org/packages/#cat:Cryptography). It's impossible for me to assess the quality of all these libraries, but for the sake of the cryptographic anthropologist, I am going to consider the most popular libraries for two famous algorithms: AES and RSA.
+So the old saying goes: whenever you want to write cryptographic code yourself, don't. Cryptography is all about standing on the shoulders of giants, but in Haskell, however, we have [quite a collection of home-grown cryptography libraries](https://hackage.haskell.org/packages/#cat:Cryptography). Because I have addressed serious concerns about the generating random data and deriving random numbers from that data is Haskell, I would be very, very wary of using any of these libraries in production code. It is impossible for me to assess the quality of all these libraries, but I will share a story about AES.
 
 ###### AES
 
@@ -118,14 +118,6 @@ First of all, I am not too surprised by the fact that the library, of course, fe
 
 The fact that this is a home-grown implementation of AES, instead of a wrapper around a known secure, peer-reviewed implementation of AES, makes me very wary. If I would use this library, I would advice my users that they should not trust their lives and safety on my code.
 
-###### RSA
-
-RSA is another popular algorithm: where AES provides a symmetric encryption algorithm, RSA is one of the most widely used assymetric encryption algorithms: you encrypt data using a public key and you can decrypt it using a private key.
-
-RSA is a difficult algorithm to implement, so it comes as no surprise that there are few Haskell implementations of these libraries: the only one that appears to be actively maintained is the [RSA](https://hackage.haskell.org/package/RSA) package. This library, sadly, relies on the [entropy](https://hackage.haskell.org/package/entropy) package for its source of random data, which we previously determined as flawed. One thing that *is* a delight, however, is that when [looking at the code](https://github.com/GaloisInc/RSA/blob/master/src/Codec/Crypto/RSA/Pure.hs) this appears to be a pure Haskell implementation of RSA, leaving a lot less room for bugs.
-
-Because the RSA package depends upon the flawed entropy package I would advice against using it; however, there are no obvious flaws in the library I can determine per se.
-
 ###### OpenSSL
 
 To be fair, other than the fact that they are home-grown implementations, is that the Haskell packages do not do a lot to prevent the user from making errors. OpenSSL is also well known to only provide building blocks, but do nothing at all to prevent a user from making errors (instead, sometimes it seems like they go out of their way to make it *more* likely that the user makes error). It is your own responsibility to apply a padding algorithm to prevent a padding oracle attack, for example.
@@ -134,7 +126,7 @@ There is a recent attempt called [NaCl](http://nacl.cr.yp.to/)/[libsodium](http:
 
 ##### Conclusion
 
-Cryptography is all about standing on the shoulders of giants: you need to be absolutely paranoid about other people's code you rely on. Many of the arguments in this article are based on the fact that cryptography libraries rely on primitives that are either known to be flawed, or possibly flawed. In these cases, it is most wise to avoid using such a library.
+When using cryptographic primitives, you need to be absolutely paranoid about other people's code you rely on. Many of the arguments in this article are based on the fact that cryptography libraries rely on primitives that are either known to be flawed, or possibly flawed. In these cases, it is most wise to avoid using such a library.
 
 The good news is that all this is fixable: the most obvious place to start fixing these problems are the libraries that generate random entropy: this is where all encryption starts. Once these are fixed, the random number libraries are a lot more safe to use, as is the RSA library.
 
