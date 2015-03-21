@@ -115,7 +115,7 @@ So, what is the most popular Haskell AES library? It seems like [cipher-aes](htt
 
 First of all, I am not too surprised by the fact that the library, of course, features [a complete home-grown implementation of AES](https://github.com/vincenthz/hs-cipher-aes/blob/master/cbits/aes.c). When AESNI is available, [it uses these instructions exclusively](https://github.com/vincenthz/hs-cipher-aes/blob/master/cbits/aes.c#L142). So, what about expecting the user is dumb and preventing them from making any errors? AES is known to be tricky: various modes are vulnerable to a [padding oracle attack](http://en.wikipedia.org/wiki/Padding_oracle_attack). So, looking at the code, it only seems like the newer OCB mode has built-in padding (which is required by the standard). When you use CBC mode, no padding is provided: no warnings for this, either.
 
-The fact that this is a home-grown implementation of AES, instead of a wrapper around a known secure, peer-reviewed implementation of AES, makes me very wary. If I would use this library, I would advice my users that they should not trust their lives and safety on my code.
+The fact that this is a home-grown implementation of AES, instead of a wrapper around a known secure, peer-reviewed implementation of AES, makes me very wary. If I would use this library, I would advice my users that they should not trust their lives and safety on this code.
 
 ###### RSA
 
