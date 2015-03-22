@@ -35,7 +35,7 @@ Now, back to the question: how do we get cryptographically secure random data in
 
 ###### entropy
 
-So, how does the entropy package get its random data? Well, if RdRand is available, [it uses RdRand exclusively](https://github.com/TomMD/entropy/blob/master/System/EntropyNix.hs#L45), of course! To [quote the maintainer](https://github.com/TomMD/entropy/issues/14) when concerns about this were raised:
+So, how does the entropy package get its random data? Well, if RdRand is available, [it uses RdRand](https://github.com/TomMD/entropy/blob/master/System/EntropyNix.hs#L45), of course! To [quote the maintainer](https://github.com/TomMD/entropy/issues/14) when concerns about exclusively using RdRand were raised:
 
 > So far as can be seen these concerns are unfounded tinfoil-hattedness. RDRAND in published design and observed use is faster, safer and more portable than urandom.
 <cite>Thomas DuBuisson, Jun. 11 2014</cite>
