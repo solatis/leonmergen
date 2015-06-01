@@ -138,7 +138,6 @@ And let's launch our relay
 hidden service descriptor: Base32String "6MQF77PTMIV3BL6S"
 {% endhighlight %}
 
-This means our webserver will be available at http://6MQF77PTMIV3BL6S.ONION/. When we connect to this address using our Tor Browser, we see a webpage and our python server servicing requests:
 
 {% highlight sh %}
 127.0.0.1 - - [01/Jun/2015 10:15:07] "GET / HTTP/1.1" 200 -
