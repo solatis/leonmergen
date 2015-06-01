@@ -19,7 +19,7 @@ I have developed a Haskell API for both projects. In this post I will outline th
 
 <img src='/images/posts/blog4a.png' style='width: 33%; margin-left: 10px; margin-bottom: 10px;' align='right' title='Tor network design' />
 
-Tor is easily the most popular of the two projects, and many people are familiar with it. For an end-user to start using Tor is incredibly easy: just download and install the <a href='https://www.torproject.org/projects/torbrowser.html.en'>Tor Browser Bundle</a> and you're set. The browser bunde also shows Tor's major target audience: people that want to browse the web anonymously. However, recent changes in <a href='https://gitweb.torproject.org/torspec.git/tree/control-spec.txt#n1299'>Tor's Control Protocol</a> allows application developers to set up ad-hoc <a href='https://www.torproject.org/docs/hidden-services.html.en'>Hidden Services</a> using Tor, opening the way for easy anonymous peer-to-peer communication between applications.
+Tor is easily the most popular of the two projects, and many people are familiar with it. For an end-user to start using Tor is incredibly easy: just download and install the <a href='https://www.torproject.org/projects/torbrowser.html.en'>Tor Browser Bundle</a> and you're set. The browser bundle also shows Tor's major target audience: people that want to browse the web anonymously. However, recent changes in <a href='https://gitweb.torproject.org/torspec.git/tree/control-spec.txt#n1299'>Tor's Control Protocol</a> allows application developers to set up ad-hoc <a href='https://www.torproject.org/docs/hidden-services.html.en'>Hidden Services</a> using Tor, opening the way for easy anonymous peer-to-peer communication between applications.
 
 Tor's design relies on a separation between relays and exit nodes, where exit nodes bridge the gap between the Tor network and the 'public' internet. Due to the set of exit nodes being relatively small, the major complaint against Tor is that it's more vulnerable to traffic analysis attacks than I2P.
 
@@ -248,6 +248,6 @@ You can find the complete example in <a href='https://github.com/solatis/haskell
 
 ##### Conclusion
 
-I personally consider Haskell a great language to write privacy-concious applications in, because of its rich type system and focus on correctness. In this post I have introduced the existence of two libraries which make it almost trivial to use either Tor or I2P for anonymous communication in Haskell.
+I personally consider Haskell a great language to write privacy-conscious applications in, because of its rich type system and focus on correctness. In this post I have introduced the existence of two libraries which make it almost trivial to use either Tor or I2P for anonymous communication in Haskell.
 
 These libraries aim to be simple rather than feature complete: if you have any suggestions for improvements, do not hesitate to let me know and open a ticket on Github.
