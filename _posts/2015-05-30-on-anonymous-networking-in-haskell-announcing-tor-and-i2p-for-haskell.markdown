@@ -3,7 +3,6 @@ layout:     post
 title:      "On anonymous networking in Haskell: announcing Tor and I2P for Haskell"
 date:       2015-05-30 12:17:00
 categories: haskell privacy
-draft:      true
 author:     Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
