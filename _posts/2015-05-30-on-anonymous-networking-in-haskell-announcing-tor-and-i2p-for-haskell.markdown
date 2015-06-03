@@ -155,7 +155,7 @@ Tor's control socket requires authentication: however, using clever protocol neg
 
 <img src='/images/posts/blog4b.png' style='width: 33%; margin-left: 10px; margin-bottom: 10px;' align='right' title='Tor network design' />
 
-I2P clearly is the underdog of the two. Where Tor is focussing primarily on anonymous web browsing (or at least, that's what it has come to be), I2P's focus is on anonymous communication between applications. This is an important distinction: I2P has facilities for programmatically creating anonymous endpoints from the ground up, and provides many several ways for an application developer to set up communications, depending on the quality of service the application requires.
+I2P clearly is the underdog of the two. Where Tor is focussing primarily on anonymous web browsing (or at least, that's what it has come to be), I2P's focus is on anonymous communication between applications. This is an important distinction: I2P has facilities for programmatically creating anonymous endpoints from the ground up, and provides several ways for an application developer to set up communications, depending on the quality of service the application requires.
 
 From what I can tell on a high level, the major difference in design between I2P and Tor is that I2P is more resilient against traffic analysis attacks, for two reasons:
 
