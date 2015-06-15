@@ -2276,7 +2276,8 @@
 /* Mobile Only */
 
 	#navPanel, #titleBar {
-		display: none;
+	  display: none;
+          visibility: hidden;
 	}
 
 	@media screen and (max-width: 736px) {
