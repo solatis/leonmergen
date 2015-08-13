@@ -1,12 +1,14 @@
 ---
-layout:     post
-title:      "On the state of cryptography in Haskell"
-date:       2015-03-21 12:22:02
-categories: haskell crypto
-author:     Leon Mergen
+layout:          post
+title:           "On the state of cryptography in Haskell"
+date:            2015-03-21 12:22:02
+categories:      haskell crypto
+seo_descr:       "When you are serious about security, you must put on a tinfoil hat and assess the quality of your application's cryptographic dependencies."
+seo_keywords:    "haskell, cryptography"
+author:          Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
-author_github: solatis
+author_github:   solatis
 ---
 <img src='/images/posts/blog3.jpg' class='blogimage' title='Somebody is watching you' />
 

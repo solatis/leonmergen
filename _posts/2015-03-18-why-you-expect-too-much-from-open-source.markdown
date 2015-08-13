@@ -1,12 +1,14 @@
 ---
-layout:     post
-title:      "Why you expect too much from open source"
-date:       2015-03-18 15:20:02
-categories: business
-author:     Leon Mergen
+layout:          post
+title:           "Why you expect too much from open source"
+date:            2015-03-18 15:20:02
+categories:      business
+seo_descr:       "A lot of startups are choosing an opensource model for their software. This is not always a good idea."
+seo_keywords:    "opensource, freemium, support, business model"
+author:          Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
-author_github: solatis
+author_github:   solatis
 ---
 <img src='/images/posts/blog2.jpg' class='blogimage' title='Building bridges' />
 

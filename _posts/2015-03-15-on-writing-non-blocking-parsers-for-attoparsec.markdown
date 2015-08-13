@@ -3,6 +3,8 @@ layout: post
 title:  "On writing non-blocking network parsers for attoparsec"
 date:   2015-03-15 14:56:02
 categories: haskell attoparsec
+seo_descr: "Haskell's attoparsec has a gnarly bug in string parsing that makes it block unnecessarily. What follows is a workaround for this bug."
+seo_keywords: "haskell, attoparsec, string, compare, blocking"
 author: Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen

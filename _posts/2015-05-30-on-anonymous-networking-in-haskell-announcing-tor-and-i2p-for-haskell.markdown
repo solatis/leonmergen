@@ -1,12 +1,14 @@
 ---
-layout:     post
-title:      "On anonymous networking in Haskell: announcing Tor and I2P for Haskell"
-date:       2015-05-30 12:17:00
-categories: haskell privacy
-author:     Leon Mergen
+layout:          post
+title:           "On anonymous networking in Haskell: announcing Tor and I2P for Haskell"
+date:            2015-05-30 12:17:00
+categories:      haskell privacy
+seo_descr:       "Haskell is a great language to write privacy-concious applications in. This post documents two Haskell libraries I released for Tor and I2P."
+seo_keywords:    "haskell, tor, i2p"
+author:          Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
-author_github: solatis
+author_github:   solatis
 ---
 <img src='/images/posts/blog4.jpg' class='blogimage' title='Privacy in a world where everybody watches you' />
 
