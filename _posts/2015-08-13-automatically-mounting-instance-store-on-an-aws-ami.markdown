@@ -9,19 +9,22 @@ author:          Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
 author_github:   solatis
-draft:           true
 ---
 <img src='/images/posts/blog5.jpg' class='blogimage' title='Mounting' />
 
+*This post was originally published at <a href='https://blog.quasardb.net/automatically-mounting-instance-stores-on-an-aws-ami/'>quasardb</a>.*
+
 On Amazon's EC2, using EBS as the backend storage for your application has been the de-facto standard. Using the local storage of an EC2 container is risky: data loss occurs when a container is stopped and it is not replicated by default. As such, people should default to using EBS, which is Amazon's version of a SAN.
 
-However, there are valid reasons for using the local instance storage, if data loss is acceptable:
+However, if data loss is acceptable, there are lot of valid reasons to prefer the local instance storage over EBS:
 
 * performance is better: no matter how big your fibre to your SAN is, all other things being equal, local disks are faster;
 * there is no single point of failure: <a href='http://www.theregister.co.uk/2013/08/26/amazon_ebs_cloud_problems/'>several</a> <a href='https://aws.amazon.com/message/680342/'>outages</a> on AWS have been EBS-related, which would have been avoided when using instance storage;
-* it is cheaper: you don't have to pay an additional monthly fee for SAN storage, and since you are paying for the instance storage anyway, why not use the disks?
+* it is cheaper: you don't have to pay an additional monthly fee for SAN storage, and since you are paying for the instance storage anyway, why not use it?
 
-Instance storage comes with a challenge though, when you want to prepare an AMI which you can deploy in any environment: you will have to detect your environment on boot and prepare the filesystem in an automated way. For <a href='http://www.quasardb.net/'>QuasarDB</a> I had to write a boot script that does exactly that, and this post guides you through the process of setting up such a script yourself.
+It is worth mentioning that all this highly depends upon the use case of the customer: it is still their choice whether to use instance storage or not, by simply not assigning any instance volumes to the container.
+
+Instance storage comes with a challenge though, when you want to prepare an AMI which you can deploy in any environment: you will have to detect your environment on boot and prepare the filesystem in an automated way. For <a href='http://www.quasardb.net/'>quasardb</a> I had to write a boot script that does exactly that, and this post guides you through the process of setting up such a script yourself.
 
 ##### Volume management
 
