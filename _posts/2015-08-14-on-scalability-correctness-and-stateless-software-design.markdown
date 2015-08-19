@@ -58,21 +58,23 @@ In mathematics, many models of physical systems are deterministic: a core trait 
 
 Something catastrophical happened to computer theory in the 60s, however: the introduction of non-determinism because of exponential time algorithms (e.g. the halting problem) and randomness. By pure coincidence, this occured roughly at the same time of the introduction of parallelism in computing systems, which introduced all kinds of non-determinism in computing systems. We had a problem: how do we deal with all this non-deterministic behaviour?
 
-Mathematicians dealt with this problem with the introduction of probability: you prove non-deterministic functions using the laws of probability just like you prove other functions. A [stochastic process](https://en.wikipedia.org/wiki/Stochastic_process) is a great example to see how mathematics deals with probability.
+Mathematicians dealt with this problem with the introduction of probability: you prove non-deterministic functions using the laws of probability just like you prove other functions. A [stochastic process](https://en.wikipedia.org/wiki/Stochastic_process) is a great example to see how mathematicians deal with probability.
 
 In computer science, a more elaborate solution was required, since it is even more important there: if your computation may have several results, they compose to have even more possible results. Since computing systems are usually composed of many smaller systems, this could easily lead to an infinite amount of possible outcomes. Clearly a new method for reasoning about non-deterministic computing systems was required; it was not just about making individual subsystems correct, it was about reasoning about the correctness of the computing system as a whole.
 
-One of the scientists that devoted much of his life to solving this problem was [Tony Hoare](https://en.wikipedia.org/wiki/Tony_Hoare), who some of you might know as the inventor of [quicksort](https://en.wikipedia.org/wiki/Quicksort). One of his other contributions that I like to focus on is more relevant in the light of this article: [Communicating sequential processes](https://en.wikipedia.org/wiki/Communicating_sequential_processes) (CSP). CSP is a formal language for describing interactions in parallel and concurrent systems, and is one of the most succesful models for providing high-level linguistic support for concurrency:
+###### Communicating Sequential Processes
 
-$$
-VendingMachine = \mu X : \{ coin, choc \} \bullet (coin \rightarrow (choc \rightarrow X))\\_\text{CSP Example for a chocolate vending machine}
-$$
+<img src='/images/posts/blog6d.png' title='Communicating Sequential Processes' align='right' style='padding-left: 20px' />
+
+One of the scientists that devoted much of his life to solving this problem was [Tony Hoare](https://en.wikipedia.org/wiki/Tony_Hoare), who some of you might know as the inventor of [quicksort](https://en.wikipedia.org/wiki/Quicksort). One of his other contributions that I like to focus on is more relevant to this article: [Communicating sequential processes](https://en.wikipedia.org/wiki/Communicating_sequential_processes) (CSP). CSP is a formal language for describing interactions in parallel and concurrent systems, and is one of the most succesful models for providing high-level linguistic support for concurrency.
 
 The industrial application of CSP has been focused on safety critical systems, but we do not have to fully apply CSP to derive any meaning from it: one of the key insights is being event-driven and have processes communicate based on message passing via channels. Sounds familiar?
 
-Yes, in fact, Erlang is similar in spirit to. It also inspired many other programming languages, such as [go](http://golang.org/doc/faq#csp) and has been the direct foundation for [occam](https://en.wikipedia.org/wiki/Occam_(programming_language)). Modeling your complex computing system using CSP will result in splitting it up in many smaller, stateless subsystems that communicate using channels. This allows you to better compose and reason about complex systems to the point where you can [validate your model](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=345823).
+CSP inspired many programming languages, and yes, Erlang and [Go](http://golang.org/doc/faq#csp) are two of them. Modeling your complex computing system using CSP will result in splitting it up in many smaller, stateless subsystems that communicate using channels. This allows you to better compose and reason about complex systems to the point where you can [validate your model](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=345823).
 
-CSP is limited to a *language* about concurrent systems only, but perhaps you can already see why I talk about it in this article: it has no shared state. Systems communicate exclusively using message passing and computations do not depend upon earlier events. If you would introduce state to these components, it would make life a lot harder for you, as a mere mortal, to ensure that your system behaves correctly:
+###### No shared state
+
+CSP is limited to a *language* about concurrent systems only, but perhaps you can already see why I mention about it: it has no shared state. Systems communicate exclusively using message passing and computations do not depend upon earlier events. If you would introduce state to these components, it would make life a lot harder for you, as a mere mortal, to ensure that your system behaves correctly:
 
 * it is hard(er) to change around the order of components;
 * there are less ways to refactor and reason about the components;
