@@ -84,15 +84,78 @@ Making state explicit in the communications between these components makes you s
 
 So, my case for correctness in programming is to use that idea and apply it to your daily life as a software engineer: if we can model big and complex systems as communicating sequential processes, can't we model the smaller part of our computing systems, the individual components, in the same way?
 
-As a matter of fact, this is actually a fundamental part of [functional programming](https://en.wikipedia.org/wiki/Functional_programming) and its [function composability](https://en.wikipedia.org/wiki/Function_composition_(computer_science)), in which functions are self-contained and stateless. You do not need to use a functional language in order to use function composability, however; imperative languages allow for function compsability just fine:
+As a matter of fact, this is actually a fundamental part of [functional programming](https://en.wikipedia.org/wiki/Functional_programming) and its [function composability](https://en.wikipedia.org/wiki/Function_composition_(computer_science)), and advocates of those languages are already well aware of the advantages of stateless design. However, you do not need to use a functional language in order to use function composability; imperative languages allow for function composability just fine. For those of you that come from these type of languages, I can already hear you thinking: I **need** object mutability, how else am I going to apply changes to these objects?!
 
-{% highlight c linenos %}
-choc_t vending_machine() {
-    return choc(coin());
+The answer is that, in fact, you don't. Let's take an example of a Counter written in a popular object-oriented language:
+
+{% highlight java linenos %}
+public class Counter {
+  private Integer count;
+
+  public void add (Integer amount) {
+    this.count += amount;
+  }
+}
+
+/* .. */
+
+Counter c = new Counter ();
+c.add(2);
+
+/* c.count == 2 */
+
+c.add(2);
+
+/* c.count == 4 */
+
+{% endhighlight %}
+
+This, however, is *wrong* since now you are leaking state: you mutate `this.count`, and as such, lose referential transparency; when you apply the function twice, you end up with a different result.
+
+Ok, so how do we get from here to a more stateless example? By separating the code from the data! It's easier than you think:
+
+{% highlight java linenos %}
+public class Counter {
+  private Integer count;
+
+  public static Counter add (Counter c, Integer amount) {
+    Counter tmp = c;
+    tmp.count += amount;
+    return tmp;
+  }
 }
 {% endhighlight %}
 
-The example above is a perfectly fine way in C to compose functions `f` and `g` together into function `z`.
+So what is going on here? Let's look at the individual steps we take in more detail:
+
+{% highlight java linenos %}
+/* Create a local copy of the object's state. */
+Counter tmp = c;
+/* Mutate our local state. */
+tmp.count += amount;
+/* Return the new Counter state. */
+return tmp;
+{% endhighlight %}
+
+The key insight here is that instead of mutating an object, we return its new state; we do not mutate `Counter` anymore, we return the new object we stored in `tmp`. This means that the function remains functionally transparent: for any given state of our Counter, it will always return the same result.
+
+This might seem a little cumbersome in this language, because it doesn't have nice constructs to create and update an object in place. The same example in a more functional friendly language would look like this:
+
+{% highlight scala linenos %}
+case class Counter(private val count: Int = 0) {
+  def add(amount: Int) = Counter( this.count + amount )
+}
+
+/* .. */
+
+var c1 = Counter();
+/* c1.count == 0 */
+c2 = c1.add(2);
+/* c1.count == 0, c2.count == 2 */
+c3 = c2.add(2);
+/* c1.count == 0, c2.count == 2, c3.count == 4 */
+
+{% endhighlight %}
 
 <!--
 
