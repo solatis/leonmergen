@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /moringa/
+Disallow: /johny/
+Disallow: /backroad/
