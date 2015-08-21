@@ -17,3 +17,5 @@ a.tags, .tags a {color:#fff;}
 .gravatar {margin-right:20px;float:left;}
 .commentdate {margin-bottom:7px;color:#aaa;font-size:13px;}
 #subheader {padding:22px 50px 23px 50px !important;}
+
+.blog table {margin-left: auto; margin-right: auto;}

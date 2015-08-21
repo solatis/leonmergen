@@ -215,11 +215,33 @@ public class Counter {
 }
 {% endhighlight %}
 
-Now, what will happen if multiple threads will try to update the counter at the same time? Because of the nature how computers work, a so-called [race condition](https://en.wikipedia.org/wiki/Race_condition#Software) will occur. As you can see in the diagram on the below, even though two threads update the counter to increment by one, only a single mutation is stored because by the time `Thread B` will store the new count, its view of the counter is outdated, and it wil overwrite and ignore the increment of `Thread A`.
+Now, what will happen if multiple threads will try to update the counter at the same time? Because of the nature how computers work, a so-called [race condition](https://en.wikipedia.org/wiki/Race_condition#Software) will occur. As you can see in the diagram on the below, even though two threads update the counter to increment by one, only a single mutation is stored because by the time `Thread B` will store the new count, its view of the counter is outdated, and it wil overwrite and ignore the increment of `Thread A`:
 
-<img src='/images/posts/blog6f.png' title='Race condition versus synchronization' style='display: block; margin-left: auto; margin-right: auto;' />
+| Thread A      | Thread B      |       | Count |
+| ------------- | ------------- |-------|-------|
+|               |               |       | 0     |
+| Read ()       |               |&#8592;| 0     |
+|               | Read ()       |&#8592;| 0     |
+| Increment ()  |               |       | 0     |
+|               | Increment ()  |       | 0     |
+| Write ()      |               |&#8592;| 1     |
+|               | Write ()      |&#8592;| 1     |
+
+<!-- <img src='/images/posts/blog6f.png' title='Race condition versus synchronization' style='display: block; margin-left: auto; margin-right: auto;' /> -->
 
 Ignoring some [low-level](https://en.wikipedia.org/wiki/Compare-and-swap) and [complex](https://en.wikipedia.org/wiki/Software_transactional_memory) alternatives, the go-to solution is to synchronize access to the counter by introducing [locks](https://en.wikipedia.org/wiki/Lock_(computer_science)). Locking effectively synchronizes access to a resource, making sure that only one thread can access a certain area at the same time. As such, with the introduction of locks, our `Counter` is now thread-safe:
+
+| Thread A      | Thread B      |       | Count |
+| ------------- | ------------- |-------|-------|
+|               |               |       | 0     |
+| Read ()       |               |&#8592;| 0     |
+| Increment ()  |               |       | 0     |
+| Write ()      |               |&#8592;| 1     |
+|               | Read ()       |&#8592;| 1     |
+|               | Increment ()  |       | 1     |
+|               | Write ()      |&#8592;| 2     |
+
+And to apply it to the code means adding the `synchronized` keyword to the functions that you wish to synchronize:
 
 {% highlight java linenos %}
 public class Counter {
