@@ -236,8 +236,8 @@ Ignoring some [low-level](https://en.wikipedia.org/wiki/Compare-and-swap) and [c
 |               |               |       | 0     |
 | Read ()       |               |&#8592;| 0     |
 | Increment ()  |               |       | 0     |
-| Write ()      |               |&#8592;| 1     |
-|               | Read ()       |&#8594;| 1     |
+| Write ()      |               |&#8594;| 1     |
+|               | Read ()       |&#8592;| 1     |
 |               | Increment ()  |       | 1     |
 |               | Write ()      |&#8594;| 2     |
 
