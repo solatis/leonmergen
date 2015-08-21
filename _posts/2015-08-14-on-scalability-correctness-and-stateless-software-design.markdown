@@ -219,12 +219,9 @@ Now, what will happen if multiple threads will try to update the counter at the 
 
 | Thread A      | Thread B      |       | Count |
 | ------------- | ------------- |-------|-------|
-|               |               |       | 0     |
 | Read ()       |               |&#8592;| 0     |
-|               | Read ()       |&#8592;| 0     |
-| Increment ()  |               |       | 0     |
-|               | Increment ()  |       | 0     |
-| Write ()      |               |&#8594;| 1     |
+| Increment ()  | Read ()       |&#8592;| 0     |
+| Write ()      | Increment ()  |&#8594;| 1     |
 |               | Write ()      |&#8594;| 1     |
 
 <!-- <img src='/images/posts/blog6f.png' title='Race condition versus synchronization' style='display: block; margin-left: auto; margin-right: auto;' /> -->
@@ -233,7 +230,6 @@ Ignoring some [low-level](https://en.wikipedia.org/wiki/Compare-and-swap) and [c
 
 | Thread A      | Thread B      |       | Count |
 | ------------- | ------------- |-------|-------|
-|               |               |       | 0     |
 | Read ()       |               |&#8592;| 0     |
 | Increment ()  |               |       | 0     |
 | Write ()      |               |&#8594;| 1     |
