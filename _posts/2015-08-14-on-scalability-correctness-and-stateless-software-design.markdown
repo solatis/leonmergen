@@ -224,8 +224,8 @@ Now, what will happen if multiple threads will try to update the counter at the 
 |               | Read ()       |&#8592;| 0     |
 | Increment ()  |               |       | 0     |
 |               | Increment ()  |       | 0     |
-| Write ()      |               |&#8592;| 1     |
-|               | Write ()      |&#8592;| 1     |
+| Write ()      |               |&#8594;| 1     |
+|               | Write ()      |&#8594;| 1     |
 
 <!-- <img src='/images/posts/blog6f.png' title='Race condition versus synchronization' style='display: block; margin-left: auto; margin-right: auto;' /> -->
 
@@ -237,9 +237,9 @@ Ignoring some [low-level](https://en.wikipedia.org/wiki/Compare-and-swap) and [c
 | Read ()       |               |&#8592;| 0     |
 | Increment ()  |               |       | 0     |
 | Write ()      |               |&#8592;| 1     |
-|               | Read ()       |&#8592;| 1     |
+|               | Read ()       |&#8594;| 1     |
 |               | Increment ()  |       | 1     |
-|               | Write ()      |&#8592;| 2     |
+|               | Write ()      |&#8594;| 2     |
 
 And to apply it to the code means adding the `synchronized` keyword to the functions that you wish to synchronize:
 
