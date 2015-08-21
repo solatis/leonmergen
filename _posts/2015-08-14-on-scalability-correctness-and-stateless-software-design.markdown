@@ -1,8 +1,8 @@
 ---
 layout:          post
 title:           "On scalability, correctness and stateless software design."
-date:            2015-08-13 14:06:00
-categories:      sysadmin
+date:            2015-08-20 14:06:00
+categories:      engineering
 seo_descr:       "Stateless software design is gaining in popularity. This article explains why you should care."
 seo_keywords:    "stateless, scalability, correctness"
 author:          Leon Mergen
@@ -13,7 +13,7 @@ draft:           true
 ---
 <img src='/images/posts/blog6.jpg' class='blogimage' title='Sharing a ride is a blocking operation' />
 
-Statelessness is a design principle applied in software design, in order to develop scalable and robust software. This article explores the fundamentals of statelessness and why it is important to make it a fundamental part of the way you design your applications. 
+Statelessness is a design principle applied in software design, in order to develop scalable and robust software. This article explores the fundamentals of statelessness and why it is important to make it a fundamental part of the way you design your applications.
 
 ##### Just what is state ?
 
@@ -74,11 +74,7 @@ CSP inspired many programming languages, and yes, Erlang and [Go](http://golang.
 
 ###### No shared state
 
-CSP is limited to a *language* about concurrent systems only, but perhaps you can already see why I mention about it: it has no shared state. Systems communicate exclusively using message passing and computations do not depend upon earlier events. If you would introduce state to these components, it would make life a lot harder for you, as a mere mortal, to ensure that your system behaves correctly:
-
-* it is hard(er) to change around the order of components;
-* there are less ways to refactor and reason about the components;
-* you do not know what other interactions a component might have.
+CSP is limited to a *language* about concurrent systems only, but perhaps you can already see why I mention about it: it has no shared state. Systems communicate exclusively using message passing and computations do not depend upon earlier events. If you would introduce state to these components, it would make life a lot harder for you, as a mere mortal, to ensure that your system behaves correctly.
 
 Making state explicit in the communications between these components makes you see the possible interactions better. This is partially a consequence of making it more difficult to pass around the state, so you are more inclined to only use state where you need it. In other words, the state is more *visible* so it is easier to see when it's unnecessary.
 
@@ -141,38 +137,154 @@ The key insight here is that instead of mutating an object, we return its new st
 
 This might seem a little cumbersome in this language, because it doesn't have nice constructs to create and update an object in place. The same example in a more functional friendly language would look like this:
 
-{% highlight scala linenos %}
-case class Counter(private val count: Int = 0) {
-  def add(amount: Int) = Counter( this.count + amount )
-}
+{% highlight c++ linenos %}
+class Counter {
+  const int count_;
+
+public:
+  Counter(int count)
+    : count_(count) { }
+
+  Counter add(int amount) const {
+    return count_ + amount; // Implicit constructor
+  }
+};
 
 /* .. */
 
-var c1 = Counter();
-/* c1.count == 0 */
-c2 = c1.add(2);
-/* c1.count == 0, c2.count == 2 */
-c3 = c2.add(2);
-/* c1.count == 0, c2.count == 2, c3.count == 4 */
-
+Counter c1(0);
+/* c1.count_ == 0 */
+Counter c2 = c1.add(2);
+/* c1.count_ == 0, c2.count_ == 2 */
+Counter c3 = c2.add(2);
+/* c1.count_ == 0, c2.count_ == 2, c3.count_ == 4 */
+}
 {% endhighlight %}
 
-<!--
+Or, if you want to go all the way and completely decouple state from computations, I would advice taking a "real" functional approach by getting rid of classes altogether:
 
-I don't know about you, but the code I feel good about is code that I know for sure works correctly, with optional bonus points for solving a complex problem at the same time. But how do we know code works correctly? Rougly, this can be divided up into two different categories:
+{% highlight c++ linenos %}
+struct Counter {
+  int count_;
+}
 
-* writing (lots of) tests;
-* static analysis.
+Counter add (Counter const cur, int const amount) {
+  return Counter { cur.count_ + amount };
+}
+{% endhighlight %}
 
-Writing tests can be a lot of work, and often can be seen as a work of art: it takes a lot of knowledge about a system to actually know what to test, and uses up a lot of creativity at the same time. Static analysis, however, is something that can be performed by computers, and as such makes for a much more ideal candidate to make your code correct: static analysis can provide you with actual *guarantees* about a piece of code.
+This introduces type safety by wrapping our data in a `Counter` struct, and ensures that the objects remain unchanged as part of the function signature's use of `const`. This allows you to better reason about the function without looking at the implementation, and let the compiler do a lot of the hard work for you: ensuring that there is no shared state.
 
-Having said that, static analysis is often very difficult to perform: ideally, we provide the computer with lots of hints about what we actually want to do, so it can make assertions whether these traits still hold. 
+As some of you might understand by now, I am clearly advocating *against* object oriented programming, due to the fact that it strongly favours tightly coupling data with computations: the computations are actually modeled as a *part* of the data. This is the wrong approach for modeling our computing systems for the reasons stated earlier.
 
--->
+I hope you are now convinced that the decoupling of data and computation is the correct approach for the following reasons:
+
+* there are more ways to refactor and reason about the components;
+* it is easier to change around the order of components;
+* you know what interactions the component has.
+
+Applying this technique will help you write higher quality code and as such makes you more productive by making the compiler do the hard work of guaranteeing the claims above hold.
 
 ##### State and scalability
 
+So far we have only discussed applying stateless programming techniques to increase the correctness of your application. But as I mentioned earlier, CSP was the result of two independent problems arising in computing theory: determinism and *parallelism*. If CSP is good for increasing the determinism of your code, what about scalability?
+
+Scalability is the capability of a system to handle a growing amount of work. We make computing systems scale by dividing up the jobs that need to be processed into smaller tasks, and run these tasks concurrently. The end result is that a system is able to process more work in the same amount of time by adding additional means for computation: in a small environment, this might mean making use of more computing cores, while in larger environments this most likely means dividing the work over multiple discrete computers.
+
+<img src='/images/posts/blog6e.png' title="Amdahl's law" align='right' style='padding-left: 20px' />
+
+###### Amdahl's law
+
+Many very wise people have said wise things about achieving scalability, but what I like to focus on is [Amdahl's law](https://en.wikipedia.org/wiki/Amdahl%27s_law), which is often used in parallel computing to predict the maximum speedup when adding more processors or computers to a cluster. In layman's terms, it involves determine the parts of your program which need to be executed sequentially. For example, if 5% of your code needs to be executed sequentually, and your total computation takes 20 hours, it will be impossible to complete in less than 1 hour.
+
+So, to phrase this knowledge differently, in order to succesfully scale a computing system, we need to reduce the amount of code that needs to be executed sequentially. How do we do that? Well, let me first take the time under which conditions your code truely needs to be sequential.
+
+###### Race conditions
+
+*Those of you who are already familiar with race conditions can safely skip this chapter.*
+
+Let's say I am trying to scale a webserver that needs to keep track of the amount of requests it has processed in order to provide meaningful statistics. I have learned that I should use multiple threads to scale an application, and at the end of each request, our application will update the same global `Counter` we used earlier:
+
+{% highlight java linenos %}
+public class Counter {
+  private Integer count;
+
+  public void add (Integer amount) {
+    this.count += amount;
+  }
+}
+{% endhighlight %}
+
+Now, what will happen if multiple threads will try to update the counter at the same time? Because of the nature how computers work, a so-called [race condition](https://en.wikipedia.org/wiki/Race_condition#Software) will occur. As you can see in the diagram on the below, even though two threads update the counter to increment by one, only a single mutation is stored because by the time `Thread B` will store the new count, its view of the counter is outdated, and it wil overwrite and ignore the increment of `Thread A`.
+
+<img src='/images/posts/blog6f.png' title='Race condition versus synchronization' style='display: block; margin-left: auto; margin-right: auto;' />
+
+Ignoring some [low-level](https://en.wikipedia.org/wiki/Compare-and-swap) and [complex](https://en.wikipedia.org/wiki/Software_transactional_memory) alternatives, the go-to solution is to synchronize access to the counter by introducing [locks](https://en.wikipedia.org/wiki/Lock_(computer_science)). Locking effectively synchronizes access to a resource, making sure that only one thread can access a certain area at the same time. As such, with the introduction of locks, our `Counter` is now thread-safe:
+
+{% highlight java linenos %}
+public class Counter {
+  private Integer count;
+
+  public synchronized void add (Integer amount) {
+    this.count += amount;
+  }
+}
+{% endhighlight %}
+
+The `synchronized` keyword in this case ensures only one thread at the same time can access this object. However, this comes with a hefty cost: we have added *sequential code* to our system which, as we determined earlier, is something we like to avoid.
+
+###### Unlocking scalability
+
+So what is the core problem here? The problem is shared state. Shared state needs to be synchronized, which means we have to introduce a lock. **Every time you introduce a lock to your application, you make it behave more like a single-threaded application.** 
+
+For a simple counter this might not mean much, but when you apply this idea to more complex operations (e.g. [I/O](https://en.wikipedia.org/wiki/Scalability#Examples), a cache, etc) or higher scalability, this problem becomes more and more visisble: it forces you to carefully examine all the interactions your computation has with any global state.
+
+When you look back at the previous chapter where I advocated stateless programming for correctness, one of the arguments I raised was that it made interactions with (global) state more visisble. If you want to scale your application, you need to be extremely aware of all interactions your code has with your data. This was one of the key traits of stateless software design: it makes the interactions your code has with any state more explicit, and as such forces you to either reduce these interactions or deal with them in a consolidated, centralized way. Exactly what we want when we want to scale our applications.
+
+So what would a scalable, stateless alternative of our request counter look like? Let's compare the stateful versus the stateless example:
+
+<img src='/images/posts/blog6g.png' title='Counter as global, synchronized state' style='display: block; margin-left: auto; margin-right: auto;' />
+
+We now assign a counter to each thread, a technique known as [thread-local storage](https://en.wikipedia.org/wiki/Thread-local_storage). Instead of having to synchronize access to a global counter, each thread now has its own counter and as such removed a scalability bottleneck in our code. But wait, we now have a lot of different counters and don't really have any way to access them! How is this going to help us?
+
+This is a consequence of thinking differently about state, and thinking about computations as multiple discrete components which have only a single way to interact with them. As such, we interact with these threads in a single, uniform way, using a single request and a response pipeline:
+
+<img src='/images/posts/blog6h.png' title='Local counter' style='display: block; margin-left: auto; margin-right: auto;' />
+
+We now have a far better picture of the interactions a thread has with the outside world, and as such the state becomes easier to manage: we have a single path a thread uses to communicate with the outside world, and we only have to test this path. Hence the case that stateless design enhances both correctness *and* scalability.
+
+While this might be a perfectly acceptable solution if you wish to scale this system within a single computer, it has drawbacks when you want to scale it over multiple machines: when we want to get an overview of state of the system as a whole, we have to aggregate the statistics. The reason is that we still have state; the state is now hidden as a counter inside each thread. This, as you might guess, doesn't scale: when you have vast clusters of hundreds of computing systems the time it takes to aggregate these statistics will be non-trivial. 
+
+When we fully apply the techniques of CSP this problem goes away:
+
+<img src='/images/posts/blog6i.png' title='Stateless counter' style='display: block; margin-left: auto; margin-right: auto;' />
+
+A tradeoff is made here: a real-world implementation might queue the logs and process the statistics in bulk, orchestrating multiple aggregators together, etcetera. This is an approach that many real-world scalable computing systems take, and they all have tradeoffs. Let's look at a few:
+
+* Hadoop's [HDFS](http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html#Staging) caches writes to its distributed file on the local server until 64MB of data has been accumulated and will then store the block. As such, the system is not realtime and is prone to data loss.
+* Apache's [Storm](https://storm.apache.org/) provides a stream-processing platform very much inspired by CSP, and guarantees consistency and is very much suitable for real-time queries, but is not suitable for bulk/offline data processing.
+* Key/value stores that are based on Amazon's [Dynamo](http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf) architecture achieve very high availability in exchange for very weak consistency: it is prone to race conditions, and applies a method called [eventual consistency](https://en.wikipedia.org/wiki/Eventual_consistency) to resolve these.
+* Google has a whole range of scalable software solutions, each of which has its own tradeoffs:
+  * [BigTable](http://en.wikipedia.org/wiki/BigTable) does not provide atomicity or strong consistency;
+  * [MegaStore](http://research.google.com/pubs/pub36971.html), [Spanner](http://en.wikipedia.org/wiki/Spanner_(database)) and [F1](http://research.google.com/pubs/pub38125.html) do not support high-throughput on geo-replicated datacenters, and as such cannot be used for strong consistency accross multiple datacenters;
+  * [Mesa](http://research.google.com/pubs/pub42851.html) provides a stream-oriented data store that works with geo-replicated datacenters and high-throughput; updates are processed in batches, and as such have a delay of several minutes before they become visisble;
+
+The takeaway is that when designing a scalable system, you need to clearly define the goal of the system and make the right tradeoffs. They all have on thing in common, though: they are all almost stateless.
+
+
 ##### State and performance
+
+##### Further reading
+
+##### Credits
+
+I would like to thank the following people for helping me and discussing the various topics I touched in this article:
+
+* the people of [#haskell on freenode](https://wiki.haskell.org/IRC_channel) for the discussion on state and correctness;
+* [Edouard Alligand](https://fr.linkedin.com/in/edouardalligand) for his wisdom on state and scalability;
+* [Jeroen Habraken](https://www.linkedin.com/in/jeroenhabraken).
+
+
 
 <!---
 
