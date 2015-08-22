@@ -251,7 +251,7 @@ public class Counter {
 }
 {% endhighlight %}
 
-The `synchronized` keyword in this case ensures only one thread at the same time can access this object. However, this comes with a hefty cost: we have added *sequential code* to our system which, as we determined earlier, is something we like to avoid. 
+The `synchronized` keyword in this case ensures only one thread at the same time can access this object. However, this comes with a hefty cost: we have added **sequential code** to our system which, as we determined earlier, is something we like to avoid. 
 
 ###### Unlocking scalability
 
@@ -273,17 +273,17 @@ This is a consequence of thinking differently about state, and thinking about co
 
 We now have a far better picture of the interactions a thread has with the outside world, and as such the state becomes easier to manage: we have a single path a thread uses to communicate with the outside world, and we only have to test this path. Hence the case that stateless design enhances both correctness *and* scalability.
 
-###### Shared pointers
+###### Example: Shared pointers
 
 At this point you might think that keeping a global counter in memory is not a realistic thing anyone would do and a non-problem. But these kind of abstractions are everywhere, and they are [leaky](http://www.joelonsoftware.com/articles/LeakyAbstractions.html): a famous example is a shared pointer. Using shared pointers might seem like a great idea: instead of manually managing memory allocation, the implementation of a shared pointer automatically cleans up as soon as all references to this memory area are gone. This hides complexity and state and as such allows you to write cleaner code.
 
-But hiding the state here can be a very bad idea: hiding *state* within a *shared* pointer means we are sharing state. When an application allocates or copies a shared pointer, its internal reference counter will be increased, and will be decreased once the shared pointer goes out of scope. As you might have guessed, increasing and decreasing this reference count needs to be thread-safe and as such access to this reference count needs to be synchronized, otherwise memory leaks (or even worse, multiple cleanups) might occur.
+But hiding the state here can be a very bad idea: hiding **state** within a **shared** pointer means we are **sharing state**. When an application allocates or copies a shared pointer, its internal reference counter will be increased, and will be decreased once the shared pointer goes out of scope. As you might have guessed, increasing and decreasing this reference count needs to be thread-safe and as such access to this reference count needs to be synchronized, otherwise memory leaks (or even worse, multiple cleanups) might occur. All this in addition to sequencing mutations of the memory the pointer points at.
 
-As such, these shared pointers leak state: they try to hide the internal state of the reference count and introduce a major scalability bottleneck in the process, which is *invisible*. This is a consequence of shared pointers having side-effects that are invisible to the user. A much more sane alternative is something like C++11's [unique_ptr](http://en.cppreference.com/w/cpp/memory/unique_ptr), in which ownership of the allocated memory is made explicit using [move semantics](http://www.cprogramming.com/c++11/rvalue-references-and-move-semantics-in-c++11.html). The application programmer is made aware of the underlying state of the object, and this abstraction doesn't leak state.
+As such, these shared pointers **leak state**: they try to hide the internal state of the reference count and introduce a major scalability bottleneck in the process, which is **invisible**. This is a consequence of shared pointers having side-effects that are invisible to the user. A much more sane alternative is something like C++11's [unique_ptr](http://en.cppreference.com/w/cpp/memory/unique_ptr), in which ownership of the allocated memory is made explicit using [move semantics](http://www.cprogramming.com/c++11/rvalue-references-and-move-semantics-in-c++11.html). The application programmer is made aware of the underlying state of the object, and this abstraction doesn't leak state.
 
 ###### Applying CSP
 
-While this might be a perfectly acceptable solution if you wish to scale this system within a single computer, it has drawbacks when you want to scale it over multiple machines: when we want to get an overview of state of the system as a whole, we have to aggregate the statistics. The reason is that we still have state; the state is now hidden as a counter inside each thread. This, as you might guess, doesn't scale: when you have vast clusters of hundreds of computing systems the time it takes to aggregate these statistics will be non-trivial. 
+While thread local storage might be a perfectly acceptable solution if you wish to scale this system within a single computer, it has drawbacks when you want to scale it over multiple machines: when we want to get an overview of state of the system as a whole, we have to aggregate the statistics. The reason is that we still have state; the state is now hidden as a counter inside each thread. This, as you might guess, doesn't scale: when you have vast clusters of hundreds of computing systems the time it takes to aggregate these statistics will be non-trivial. 
 
 When we fully apply the techniques of CSP this problem goes away:
 
@@ -305,9 +305,9 @@ The takeaway is that when designing a scalable system, you need to clearly defin
 
 ##### State and performance
 
-Scalability and performance are, albeit related, entirely different beasts. Where scalability is all about keeping your computing systems busy during increasing workload, performance is about making your computing systems *do less*. This might seem trivial, but it is something that many people overlook: as we have shown in the previous example, increasing scalability often has a negative impact on performance!
+Scalability and performance are, albeit related, entirely different beasts. Where scalability is all about keeping your computing systems busy during increasing workload, performance is about making your computing systems **do less**. This might seem trivial, but it is something that many people overlook: as we have shown in the previous example, increasing scalability often has a negative impact on performance!
 
-Introducing scalability to a system means you have to decrease its shared state; instead of using a single pool of *state*, we have to copy our entire state and pass it around all the time. This is clearly less efficient, but sometimes a necessity in order to make your system scale, and very often an acceptable tradeoff. Better yet, when you first make your system *correct*, then make it *scalable*, it is often *easier* to apply optimizations to make it more *performant*. Yet, many people seem to have this order mixed up: for example, they first focus on making their code performant and correct, but forgetting all about scalability; this is *wrong*. Even worse, since there is a clear trend with processor manufacturs to add more cores to their CPUs, the line between having a computing system and a system that scales becomes more and more blurred.
+Introducing scalability to a system means you have to decrease its shared state; instead of using a single pool of **state**, we have to copy our entire state and pass it around all the time. This is clearly less efficient, but sometimes a necessity in order to make your system scale, and very often an acceptable tradeoff. Better yet, when you first make your system **correct**, then make it **scalable**, it is often **easier** to apply optimizations to make it more **performant**. Yet, many people seem to have this order mixed up: for example, they first focus on making their code performant and correct, but forgetting all about scalability; this is *wrong*. Even worse, since there is a clear trend with processor manufacturs to add more cores to their CPUs, the line between having a computing system and a system that scales becomes more and more blurred.
 
 Having said that, there are legitimate constraints when you should prioritize performance over scalability:
 
@@ -323,10 +323,20 @@ As you can see in the diagram above, the different steps in the protocol depend 
 
 ##### Conclusion
 
-90s/00s: first correctness, then performance, then scalability
-10s/20s: first correctness, then scalability, then performance
+The way software developers interact with their computing systems is changing. Where so far the focus has been on correctness first and then focus on performance, scalability was mostly a non-concern. Software developer relied on CPU manufacturers to increase performance and the application would magically run faster on next generation computers.
+
+This free lunch, however, is over. It is by now an accepted fact that an easy way to make your application more responsive is by taking advantage of multiple CPU cores concurrently. This means that the way we, as software developers, change the way we think about application design. The focus should be on **correctness** which allows for **scalability**, and after having achieved this, focus on optimizing for performance.
+
+Stateless software design is an important way to achieve this, and I hope that by now I have convinced you to apply this technique in your daily life as a software engineer.
 
 ##### Further reading
+
+* [Referential transparency](https://en.wikipedia.org/wiki/Referential_transparency_(computer_science));
+* [Memoization](https://en.wikipedia.org/wiki/Memoization), a compiler optimization technique closely related to referential transparency;
+* [Communicating Sequential Processes](http://www.usingcsp.com/), the book written by Tony Hoare;
+* ...
+
+<!--
 
 ##### Credits
 
@@ -335,56 +345,5 @@ I would like to thank the following people for helping me and discussing the var
 * the people of [#haskell on freenode](https://wiki.haskell.org/IRC_channel) for the discussion on state and correctness;
 * [Edouard Alligand](https://fr.linkedin.com/in/edouardalligand) for his wisdom on state and scalability;
 * [Jeroen Habraken](https://www.linkedin.com/in/jeroenhabraken).
-
-
-
-<!---
-
-- state and correctness
-
-"
-<ski> solatis : stateful is harmful because it's harder to change around the
-      order of the components, there's less ways to refactor and reason about
-      it
-<ski> solatis : another big part is having to assume the worst (because you
-      can't recall what things a call may change (and thus interact implicitly
-      with other stuff), or you don't know because you don't have source)
-<ski> solatis : making state explicit means that you see the possible
-      interactions better, partly as a consequence of it being a PITA so
-      you're more inclined to only use state where you need it"
-      "
-"
-<|f`-`|f> In addition to that, with what ski mentions, since the state is
-          always "visible" or there, it's easier to see where it's unnecesarry
-                                                                        [16:09]
-<|f`-`|f> there are functions to dealing with splitting and recombining pure
-          values with the state values                                  [16:10]
-"
-
-
-* feel good about making software: correct code
-* correct code: compiler guarantees and writing tests
-* writing tests is hard and boring, compilers can guarantee things!
-* allows you to reason about code
-* you don't need an FP language to get your compiler to reason about code (c++)
-
-
-- state and scalability
-
-* having state is ok, sharing state is not!
-* shared state is ok, if it is close together
-** OS kernel has state: necessary;
-
-* last 10 years, CPUs started bringing more cores, increasing the gap;
-* the next 10 years, the gap will only widen;
-* every time you lock, you make something single-threaded;
- -> how is a mutex implemented ?
-
-* in the future, the difference between scalability and performance will only decrease! -> stateless design for performance!
-
-- state and performance;
-
-* having state is sometimes required when performance is an issue;
-* extreme example: relay network of NASA, protocol is stateful due to bandwidth limitations;
 
 -->
