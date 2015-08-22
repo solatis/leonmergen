@@ -19,9 +19,9 @@ Statelessness is a design principle applied in software design, in order to deve
 
 <img src='/images/posts/blog6a.png' title='Stateful versus stateless' style='display: block; margin-left: auto; margin-right: auto;' />
 
-Statelessness defines whether or not a computation is designed to depend on one or more preceding events in a sequence of interactions. A stateful application carefully manages an internal state when from within a computation. A stateless application, however, decouples the computation from the state and manages the state at the *interactions* between computations. As such, a computation doesn't need to worry about managing any state, only its input and output.
+Statelessness defines whether or not a computation is designed to depend on one or more preceding events in a sequence of interactions. A stateful application carefully manages an internal state when from within a computation. A stateless application, however, decouples the computation from the state and manages the state at the **interactions** between computations. As such, a computation doesn't need to worry about managing any state, only its input and output.
 
-As you can see ib the diagram above, we do not get rid of the state altogether; we separate the code from the state in such a way that state becomes an immutable object: instead of *mutating* the state, you *transform* one state into another. This what computer scientists call [referential transparency](https://en.wikipedia.org/wiki/Referential_transparency_(computer_science)): the ability to replace a computation with the value it returns without changing the behavior of the program.
+As you can see ib the diagram above, we do not get rid of the state altogether; we separate the code from the state in such a way that state becomes an immutable object: instead of **mutating** the state, you **transform** one state into another. This what computer scientists call [referential transparency](https://en.wikipedia.org/wiki/Referential_transparency_(computer_science)): the ability to replace a computation with the value it returns without changing the behavior of the program.
 
 Referential transparency is closely related to [object immutability](https://en.wikipedia.org/wiki/Immutable_object), the trait of an object that it cannot be changed after it has been created. As such, object immutability forces you use referential transparency, since the state cannot be altered; you can only create a new state, typically as a return value of a function.
 
@@ -78,7 +78,7 @@ CSP inspired many programming languages, and yes, Erlang and [Go](http://golang.
 
 CSP is limited to a *language* about concurrent systems only, but perhaps you can already see why I mention about it: it has no shared state. Systems communicate exclusively using message passing and computations do not depend upon earlier events. If you would introduce state to these components, it would make life a lot harder for you, as a mere mortal, to ensure that your system behaves correctly.
 
-Making state explicit in the communications between these components makes you see the possible interactions better. This is partially a consequence of making it more difficult to pass around the state, so you are more inclined to only use state where you need it. In other words, the state is more *visible* so it is easier to see when it's unnecessary.
+Making state explicit in the communications between these components makes you see the possible interactions better. This is partially a consequence of making it more difficult to pass around the state, so you are more inclined to only use state where you need it. In other words, the state is more **visible** so it is easier to see when it's unnecessary.
 
 So, my case for correctness in programming is to use that idea and apply it to your daily life as a software engineer: if we can model big and complex systems as communicating sequential processes, can't we model the smaller part of our computing systems, the individual components, in the same way?
 
@@ -189,7 +189,7 @@ Applying this technique will help you write higher quality code and as such make
 
 ##### State and scalability
 
-So far we have only discussed applying stateless programming techniques to increase the correctness of your application. But as I mentioned earlier, CSP was the result of two independent problems arising in computing theory: determinism and *parallelism*. If CSP is good for increasing the determinism of your code, what about scalability?
+So far we have only discussed applying stateless programming techniques to increase the correctness of your application. But as I mentioned earlier, CSP was the result of two independent problems arising in computing theory: **determinism** and **parallelism**. If CSP is good for increasing the determinism of your code, what about scalability?
 
 Scalability is the capability of a system to handle a growing amount of work. We make computing systems scale by dividing up the jobs that need to be processed into smaller tasks, and run these tasks concurrently. The end result is that a system is able to process more work in the same amount of time by adding additional means for computation: in a small environment, this might mean making use of more computing cores, while in larger environments this most likely means dividing the work over multiple discrete computers.
 
@@ -319,7 +319,7 @@ To introduce a situation where all these reasons apply, let's look at an extreme
 
 <img src='/images/posts/blog6j.png' title='Space Data System File Delivery Protocol' style='display: block; margin-left: auto; margin-right: auto;' />
 
-As you can see in the diagram above, the different steps in the protocol depend upon earlier events: files are split in segments, a transaction is created, segments are transferred and the source is notified when the entire file has been transferred. It has the ability to retransmit segments of a file in case the transmission was corrupted: where a *stateless* protocol would retransmit the entire file, a sensible optimization is for the destination to hold the *state* of the succesfully received segments in memory while it awaits retransmission of the corrupted segments.
+As you can see in the diagram above, the different steps in the protocol depend upon earlier events: files are split in segments, a transaction is created, segments are transferred and the source is notified when the entire file has been transferred. It has the ability to retransmit segments of a file in case the transmission was corrupted: where a **stateless** protocol would retransmit the entire file, a sensible optimization is for the destination to hold the **state** of the succesfully received segments in memory while it awaits retransmission of the corrupted segments.
 
 ##### Conclusion
 
