@@ -29,9 +29,11 @@ Referential transparency is closely related to [object immutability](https://en.
 
 Now, at this point, you might think: stateless is a lie! Even if I design my application to use an immutable state, the underlying infrastructure might not! As such, it is impossible to build a true stateless application.
 
-This is a correct assessment: statelessness applies only to your own problem domain. The [HTTP Protocol](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) is often praised as an example of the simplicitly you can achieve using a stateless protocol. However, it builds upon a stateful protocol ([TCP](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)), which in turn builds upon a stateless protocol ([IP](https://en.wikipedia.org/wiki/Internet_Protocol)). This is a great example of separation of concerns: HTTP is able to be stateless *because* TCP does the hard work of managing state.
+This is a correct assessment: statelessness applies only to your own problem domain. The [HTTP Protocol](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) is often praised as an example of the simplicitly you can achieve using a stateless protocol. However, it builds upon a stateful protocol ([TCP](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)), which in turn builds upon a stateless protocol ([IP](https://en.wikipedia.org/wiki/Internet_Protocol)).
 
-At the end of the article, I will show you under which circumstances a stateful design might be appropriate.
+This is a great example of separation of concerns: TCP has enabled many great applications to be built on top of it *because* it completely hides all the complexity and state management for the applications that are built on top of it. At the end of this article I will discuss the circumstances where a stateful design makes sense.
+
+Another example of state stacking are garbage collectors. In C-like languages, you have the freedom to manually manage your memory allocations. This comes with the cost of the added complexity of managing the state of a pointer in your application, whether the memory address the pointer points to is currently allocated or not. Garbage collectors move the state of this pointer (allocated/free) from application code to the core of the language. Garbage collectors are notorious for being complex beasts, but so is manual memory management. By hiding this complexity from the application programmer it reduces state management in the code and as such improves correctness.
 
 ###### Example: Erlang hot code reloading
 
@@ -249,11 +251,11 @@ public class Counter {
 }
 {% endhighlight %}
 
-The `synchronized` keyword in this case ensures only one thread at the same time can access this object. However, this comes with a hefty cost: we have added *sequential code* to our system which, as we determined earlier, is something we like to avoid.
+The `synchronized` keyword in this case ensures only one thread at the same time can access this object. However, this comes with a hefty cost: we have added *sequential code* to our system which, as we determined earlier, is something we like to avoid. 
 
 ###### Unlocking scalability
 
-So what is the core problem here? The problem is shared state. Shared state needs to be synchronized, which means we have to introduce a lock. **Every time you introduce a lock to your application, you make it behave more like a single-threaded application.** 
+So what is the core problem here? As we discussed earlier, in order to achieve scalability, we must make our computing system able to divide up a job into smaller tasks and run these concurrently. In the example above we still have shared state, which means we have to introduce a lock. **Every time you introduce a lock to your application, you make it behave more like a single-threaded application.**
 
 For a simple counter this might not mean much, but when you apply this idea to more complex operations (e.g. [I/O](https://en.wikipedia.org/wiki/Scalability#Examples), a cache, etc) or higher scalability, this problem becomes more and more visisble: it forces you to carefully examine all the interactions your computation has with any global state.
 
@@ -271,11 +273,23 @@ This is a consequence of thinking differently about state, and thinking about co
 
 We now have a far better picture of the interactions a thread has with the outside world, and as such the state becomes easier to manage: we have a single path a thread uses to communicate with the outside world, and we only have to test this path. Hence the case that stateless design enhances both correctness *and* scalability.
 
+###### Shared pointers
+
+At this point you might think that keeping a global counter in memory is not a realistic thing anyone would do and a non-problem. But these kind of abstractions are everywhere, and they are [leaky](http://www.joelonsoftware.com/articles/LeakyAbstractions.html): a famous example is a shared pointer. Using shared pointers might seem like a great idea: instead of manually managing memory allocation, the implementation of a shared pointer automatically cleans up as soon as all references to this memory area are gone. This hides complexity and state and as such allows you to write cleaner code.
+
+But hiding the state here can be a very bad idea: hiding *state* within a *shared* pointer means we are sharing state. When an application allocates or copies a shared pointer, its internal reference counter will be increased, and will be decreased once the shared pointer goes out of scope. As you might have guessed, increasing and decreasing this reference count needs to be thread-safe and as such access to this reference count needs to be synchronized, otherwise memory leaks (or even worse, multiple cleanups) might occur.
+
+As such, these shared pointers leak state: they try to hide the internal state of the reference count and introduce a major scalability bottleneck in the process, which is *invisible*. This is a consequence of shared pointers having side-effects that are invisible to the user. A much more sane alternative is something like C++11's [unique_ptr](http://en.cppreference.com/w/cpp/memory/unique_ptr), in which ownership of the allocated memory is made explicit using [move semantics](http://www.cprogramming.com/c++11/rvalue-references-and-move-semantics-in-c++11.html). The application programmer is made aware of the underlying state of the object, and this abstraction doesn't leak state.
+
+###### Applying CSP
+
 While this might be a perfectly acceptable solution if you wish to scale this system within a single computer, it has drawbacks when you want to scale it over multiple machines: when we want to get an overview of state of the system as a whole, we have to aggregate the statistics. The reason is that we still have state; the state is now hidden as a counter inside each thread. This, as you might guess, doesn't scale: when you have vast clusters of hundreds of computing systems the time it takes to aggregate these statistics will be non-trivial. 
 
 When we fully apply the techniques of CSP this problem goes away:
 
 <img src='/images/posts/blog6i.png' title='Stateless counter' style='display: block; margin-left: auto; margin-right: auto;' />
+
+###### Scalability is a tradeoff
 
 A tradeoff is made here: a real-world implementation might queue the logs and process the statistics in bulk, orchestrating multiple aggregators together, etcetera. This is an approach that many real-world scalable computing systems take, and they all have tradeoffs. Let's look at a few:
 
@@ -289,8 +303,28 @@ A tradeoff is made here: a real-world implementation might queue the logs and pr
 
 The takeaway is that when designing a scalable system, you need to clearly define the goal of the system and make the right tradeoffs. They all have on thing in common, though: they are all almost stateless.
 
-
 ##### State and performance
+
+Scalability and performance are, albeit related, entirely different beasts. Where scalability is all about keeping your computing systems busy during increasing workload, performance is about making your computing systems *do less*. This might seem trivial, but it is something that many people overlook: as we have shown in the previous example, increasing scalability often has a negative impact on performance!
+
+Introducing scalability to a system means you have to decrease its shared state; instead of using a single pool of *state*, we have to copy our entire state and pass it around all the time. This is clearly less efficient, but sometimes a necessity in order to make your system scale, and very often an acceptable tradeoff. Better yet, when you first make your system *correct*, then make it *scalable*, it is often *easier* to apply optimizations to make it more *performant*. Yet, many people seem to have this order mixed up: for example, they first focus on making their code performant and correct, but forgetting all about scalability; this is *wrong*. Even worse, since there is a clear trend with processor manufacturs to add more cores to their CPUs, the line between having a computing system and a system that scales becomes more and more blurred.
+
+Having said that, there are legitimate constraints when you should prioritize performance over scalability:
+
+* the link between individual components is unreliable;
+* the link between individual components has limited bandwidth;
+* the link between individual components has a great latency.
+
+To introduce a situation where all these reasons apply, let's look at an extreme example: [the recommended standard for a Space Data System File Delivery Protocol](http://public.ccsds.org/publications/archive/727x0b4.pdf). Space missions have to cope with limited systems with limited computational power and memory and unreliable connections due to environmental restrictions. As such, this protocol focuses mostly of working in this constrained environment with protocol optimizations and doesn't worry about scalability that much.
+
+<img src='/images/posts/blog6j.png' title='Space Data System File Delivery Protocol' style='display: block; margin-left: auto; margin-right: auto;' />
+
+As you can see in the diagram above, the different steps in the protocol depend upon earlier events: files are split in segments, a transaction is created, segments are transferred and the source is notified when the entire file has been transferred. It has the ability to retransmit segments of a file in case the transmission was corrupted: where a *stateless* protocol would retransmit the entire file, a sensible optimization is for the destination to hold the *state* of the succesfully received segments in memory while it awaits retransmission of the corrupted segments.
+
+##### Conclusion
+
+90s/00s: first correctness, then performance, then scalability
+10s/20s: first correctness, then scalability, then performance
 
 ##### Further reading
 
