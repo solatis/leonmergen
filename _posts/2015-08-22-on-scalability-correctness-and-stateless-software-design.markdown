@@ -1,8 +1,8 @@
 ---
 layout:          post
-title:           "On scalability, correctness and stateless software design."
-date:            2015-08-20 14:06:00
-categories:      engineering
+title:           "On stateless software design: what is state ?"
+date:            2015-08-24 09:00:00
+categories:      code
 seo_descr:       "Stateless software design is gaining in popularity. This article explains why you should care."
 seo_keywords:    "stateless, scalability, correctness"
 author:          Leon Mergen
@@ -12,6 +12,8 @@ author_github:   solatis
 draft:           true
 ---
 <img src='/images/posts/blog6.jpg' class='blogimage' title='Sharing a ride is a blocking operation' />
+
+| 1. What is state ? | [2. State and correctness]() | [3. State and scalability]() | [4. State and performance]() | [5. Conclusion]()
 
 Statelessness is a design principle applied in software design, in order to develop scalable and robust software. This article explores the fundamentals of statelessness and why it is important to make it a fundamental part of the way you design your applications.
 
@@ -53,6 +55,9 @@ Where most interpreters mutate the state directly, Erlang uses an immutable stat
 
 When you tell Erlang to upgrade your code, it tells the old code to remember the program's state and call the new code recursively. While not impossible, without referential transparency this problem would be much harder to solve.
 
+| Next page: [2. State and correctness]() |
+
+<!--
 
 ##### State and correctness
 
@@ -226,8 +231,6 @@ Now, what will happen if multiple threads will try to update the counter at the 
 | Write ()      | Increment ()  |&#8594;| 1     |
 |               | Write ()      |&#8594;| 1     |
 
-<!-- <img src='/images/posts/blog6f.png' title='Race condition versus synchronization' style='display: block; margin-left: auto; margin-right: auto;' /> -->
-
 Ignoring some [low-level](https://en.wikipedia.org/wiki/Compare-and-swap) and [complex](https://en.wikipedia.org/wiki/Software_transactional_memory) alternatives, the go-to solution is to synchronize access to the counter by introducing [locks](https://en.wikipedia.org/wiki/Lock_(computer_science)). Locking effectively synchronizes access to a resource, making sure that only one thread can access a certain area at the same time. As such, with the introduction of locks, our `Counter` is now thread-safe:
 
 | Thread A      | Thread B      |       | Count |
@@ -335,6 +338,8 @@ Stateless software design is an important way to achieve this, and I hope that b
 * [Memoization](https://en.wikipedia.org/wiki/Memoization), a compiler optimization technique closely related to referential transparency;
 * [Communicating Sequential Processes](http://www.usingcsp.com/), the book written by Tony Hoare;
 * ...
+
+-->
 
 <!--
 

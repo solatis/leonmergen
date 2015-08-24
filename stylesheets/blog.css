@@ -18,4 +18,4 @@ a.tags, .tags a {color:#fff;}
 .commentdate {margin-bottom:7px;color:#aaa;font-size:13px;}
 #subheader {padding:22px 50px 23px 50px !important;}
 
-.blog table {margin-left: auto; margin-right: auto;}
+.blog table:not(.toc)  {margin-left: auto; margin-right: auto;}
