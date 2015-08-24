@@ -19,3 +19,22 @@ a.tags, .tags a {color:#fff;}
 #subheader {padding:22px 50px 23px 50px !important;}
 
 .blog table:not(.toc)  {margin-left: auto; margin-right: auto;}
+
+
+.blog hr {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border: none;
+  border-top: 1px solid #aaa;
+  color: #aaa;
+  text-align: center;
+}
+.blog hr:after {
+  content: "\00a7";
+  display: inline-block;
+  position: relative;
+  top: -0.65em;
+  font-size: 1.3em;
+  padding: 0 1em;
+  background: #fff;
+}
