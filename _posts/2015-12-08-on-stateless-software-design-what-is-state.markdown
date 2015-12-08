@@ -1,7 +1,7 @@
 ---
 layout:          post
 title:           "On stateless software design: what is state ?"
-date:            2015-08-24 09:00:00
+date:            2015-12-04 09:00:00
 categories:      code
 seo_descr:       "Stateless software design is gaining in popularity. This article explains why you should care."
 seo_keywords:    "stateless, scalability, correctness"
@@ -9,11 +9,11 @@ author:          Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
 author_github:   solatis
-draft:           true
+draft:           false
 ---
 <img src='/images/posts/blog6.jpg' class='blogimage' title='Sharing a ride is a blocking operation' />
 
-| 1. What is state ? | [2. State and correctness]({% post_url 2015-08-24-on-stateless-software-design-state-and-correctness %}) | [3. State and scalability]({% post_url 2015-08-24-on-stateless-software-design-state-and-scalability %}) | [4. State and performance]({% post_url 2015-08-24-on-stateless-software-design-state-and-performance %}) | [5. Conclusion]({% post_url 2015-08-24-on-stateless-software-design-conclusion %})
+| 1. What is state ? | [2. State and correctness]({% post_url 2015-12-08-on-stateless-software-design-state-and-correctness %}) | [3. State and scalability]({% post_url 2015-12-08-on-stateless-software-design-state-and-scalability %}) | [4. State and performance]({% post_url 2015-12-08-on-stateless-software-design-state-and-performance %}) | [5. Conclusion]({% post_url 2015-12-08-on-stateless-software-design-conclusion %})
 
 Statelessness is a design principle applied in software design, in order to develop scalable and robust software. This article explores the fundamentals of statelessness and why it is important to make it a fundamental part of the way you design your applications.
 
@@ -41,21 +41,21 @@ Another example of state stacking are garbage collectors. In C-like languages, y
 
 To explore the concept of state a little further, we will take a look at a language that is famous for its statelessness and scalability: [Erlang](http://www.erlang.org).
 
-Erlang is well known for popularizing the [actor model](https://en.wikipedia.org/wiki/Actor_model) which conforms to the stateless ideology described above: instead of having an actor manage internal state, it communicates state from one actor to another.
+Erlang wouldn't be the same without its [Open Telecom Platform](http://learnyousomeerlang.com/what-is-otp) (OTP); I frequently call Erlang a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) for OTP. OTP grew out of a need of reducing error and increasing availability in telecom operations: when you have one switch connecting multiple telecom networks, even the slightest downtime would be highly inconvenient and undeseriable. OTP takes care of this and has been carefully engineered and battle-hardened over years.
 
-Erlang takes the concept of immutability a little bit further than most programming languages: it also applies the concept of immutability to its own interpreter. Let's take a look at the typical operation of the Erlang interpreter.
+One of the more commonly used patterns in OTP is the `gen_server`: this is the module for implementing the server in a client-server relation. One of the more interesting parts of this pattern is the way it handles state:
 
-<img src='/images/posts/blog6b.png' title='Erlang interpreter' style='display: block; margin-left: auto; margin-right: auto;' />
+<img src='/images/posts/blog6b.png' title='Erlang gen_server' style='display: block; margin-left: auto; margin-right: auto;' />
 
-Where most interpreters mutate the state directly, Erlang uses an immutable state and recursively calls itself with the new state. Now why would anyone do that, doesn't that make the whole thing an incredibly expensive operations ?
+Where most servers mutate the state directly, Erlang's `gen_server` uses an immutable state and recursively calls itself with the new state. Now why would anyone do that, doesn't that make the whole thing an incredibly expensive operations ?
 
 *Except* that you can invert this where you keep the state the same but upgrade the code:
 
 <img src='/images/posts/blog6c.png' title='Erlang hot code reload' style='display: block; margin-left: auto; margin-right: auto;' />
 
-When you tell Erlang to upgrade your code, it tells the old code to remember the program's state and call the new code recursively. While not impossible, without referential transparency this problem would be much harder to solve.
+When you tell Erlang to upgrade your code, it tells the old code to remember the program's state and call the new code recursively. And, when an upgrade fails, you can revert to a known good state. While not impossible, without referential transparency this problem would be much harder to solve. 
 
 ---
 
-| 1. What is state | &#187; | [2. State and correctness]({% post_url 2015-08-24-on-stateless-software-design-state-and-correctness %}) |
+| 1. What is state | &#187; | [2. State and correctness]({% post_url 2015-12-08-on-stateless-software-design-state-and-correctness %}) |
 

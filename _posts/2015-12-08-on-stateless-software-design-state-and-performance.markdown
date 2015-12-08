@@ -1,7 +1,7 @@
 ---
 layout:          post
 title:           "On stateless software design: state and performance"
-date:            2015-08-24 09:00:00
+date:            2015-12-07 09:00:00
 categories:      code
 seo_descr:       "Stateless software design is gaining in popularity. This article explains why you should care."
 seo_keywords:    "stateless, state, performance"
@@ -9,11 +9,11 @@ author:          Leon Mergen
 author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
 author_github:   solatis
-draft:           true
+draft:           false
 ---
 <img src='/images/posts/blog6.jpg' class='blogimage' title='Sharing a ride is a blocking operation' />
 
-| [1. What is state ?]({% post_url 2015-08-24-on-stateless-software-design-what-is-state %}) | [2. State and correctness]({% post_url 2015-08-24-on-stateless-software-design-state-and-correctness %}) | [3. State and scalability]({% post_url 2015-08-24-on-stateless-software-design-state-and-scalability %}) | 4. State and performance | [5. Conclusion]({% post_url 2015-08-24-on-stateless-software-design-conclusion %})
+| [1. What is state ?]({% post_url 2015-12-08-on-stateless-software-design-what-is-state %}) | [2. State and correctness]({% post_url 2015-12-08-on-stateless-software-design-state-and-correctness %}) | [3. State and scalability]({% post_url 2015-12-08-on-stateless-software-design-state-and-scalability %}) | 4. State and performance | [5. Conclusion]({% post_url 2015-12-08-on-stateless-software-design-conclusion %})
 
 ##### State and performance
 
@@ -35,4 +35,4 @@ As you can see in the diagram above, the different steps in the protocol depend 
 
 ---
 
-| [3. State and scalability]({% post_url 2015-08-24-on-stateless-software-design-state-and-scalability %}) | &#171; | 4. State and performance | &#187; | [5. Conclusion]({% post_url 2015-08-24-on-stateless-software-design-conclusion %}) |
+| [3. State and scalability]({% post_url 2015-12-08-on-stateless-software-design-state-and-scalability %}) | &#171; | 4. State and performance | &#187; | [5. Conclusion]({% post_url 2015-12-08-on-stateless-software-design-conclusion %}) |
