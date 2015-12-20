@@ -10,7 +10,7 @@ author_gravatar: a00ff1a0178e0e6bda0108bf6d40eefc
 author_facebook: lmergen
 author_github:   solatis
 ---
-<img src='/images/posts/blog2.jpg' class='blogimage' title='Building bridges' />
+<img src='/images/posts/blog1.jpg' class='blogimage' />
 
 There has been a trend in the last years where software companies completely embrace the open source model and release their product as open source for the community. This has been largely fueled by the free software movement: they have shown that groups of individuals, making software for the sake of sharing it with others, are just as capable as releasing quality software as traditional software businesses are. In a struggle to keep themselves relevant, some businesses have been founded on the idea of embracing free (as in speech) software and build their business around this product. In this post I will make an argument to show that this is a flawed way of conducting business, and why you should be wary of buying into these companies' products. 
 
